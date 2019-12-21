@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.CollectionsFragment">
+
+    <androidx.constraintlayout.widget.Group
+        android:visibility="gone"
+        android:id="@+id/progress_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:constraint_referenced_ids="progress_bar,progress_text"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/progress_group"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_group"
+        app:layout_constraintEnd_toEndOf="@+id/progress_group"
+        app:layout_constraintStart_toStartOf="@+id/progress_group" />
+
+    <TextView
+        android:id="@+id/progress_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/progress_group"
+        app:layout_constraintEnd_toEndOf="@+id/progress_group"
+        app:layout_constraintStart_toStartOf="@id/progress_group"
+        app:layout_constraintTop_toBottomOf="@+id/progress_bar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/placeholder_group"
+        android:visibility="gone"
+        app:constraint_referenced_ids="placeholder_image,placeholder_text,placeholder_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/placeholder_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/no_internet_connection"
+        app:layout_constraintBottom_toBottomOf="@+id/placeholder_group"
+        app:layout_constraintEnd_toEndOf="@+id/placeholder_group"
+        app:layout_constraintStart_toStartOf="@+id/placeholder_group"
+        app:layout_constraintTop_toTopOf="@+id/placeholder_group"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/placeholder_text"
+        android:text="No Internet Connection.\nPlease, try again."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/placeholder_group"
+        app:layout_constraintEnd_toEndOf="@+id/placeholder_group"
+        app:layout_constraintStart_toStartOf="@+id/placeholder_group"
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_image"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/placeholder_button"
+        android:text="Retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/placeholder_group"
+        app:layout_constraintEnd_toEndOf="@+id/placeholder_group"
+        app:layout_constraintStart_toStartOf="@+id/placeholder_group"
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_text"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="visible"
+            android:id="@+id/collections_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
