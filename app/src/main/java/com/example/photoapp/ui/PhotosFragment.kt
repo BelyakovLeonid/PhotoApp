@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photoapp.R
 import com.example.photoapp.data.repository.PhotoDataSource
 import com.example.photoapp.ui.adapters.PhotosAdapter
+import com.example.photoapp.ui.base.PhotoDetailsFragment
 import com.example.photoapp.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class HomeFragment : ScopedFragment() {
+class PhotosFragment : ScopedFragment() {
     val source = PhotoDataSource()
 
     override fun onCreateView(
@@ -41,9 +42,14 @@ class HomeFragment : ScopedFragment() {
         }
 
         source.downloadedListPhoto.observeForever {
-            collections_recycler.adapter = PhotosAdapter(it)
+            collections_recycler.adapter = PhotosAdapter(it, this::goToDetails)
             collections_recycler.layoutManager = LinearLayoutManager(activity)
         }
+    }
+
+    private fun goToDetails() {
+        val fr = PhotoDetailsFragment()
+        fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fr)?.commit()
     }
 
 

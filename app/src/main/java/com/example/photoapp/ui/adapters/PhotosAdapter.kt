@@ -1,6 +1,5 @@
 package com.example.photoapp.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,8 @@ import com.example.photoapp.R
 import com.example.photoapp.data.network.response.photos.response.ListResponse
 
 class PhotosAdapter(
-    private val dataSet: List<ListResponse>
+    private val dataSet: List<ListResponse>,
+    private val onClick: () -> Unit
 ) : RecyclerView.Adapter<PhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -24,8 +24,8 @@ class PhotosAdapter(
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photoItem = dataSet[position]
-        Log.d("MyTag", "photo Url = ${photoItem.urls.regular}")
         Glide.with(holder.itemView).load(photoItem.urls.regular).into(holder.photoView)
+        holder.photoView.setOnClickListener { onClick.invoke() }
     }
 }
 

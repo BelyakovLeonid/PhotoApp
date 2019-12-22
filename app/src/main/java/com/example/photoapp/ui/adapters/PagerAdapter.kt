@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.photoapp.ui.CollectionsFragment
-import com.example.photoapp.ui.HomeFragment
+import com.example.photoapp.ui.PhotosFragment
 
 class PagerAdapter(
     fm: FragmentManager,
@@ -16,7 +16,7 @@ class PagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> HomeFragment()
+            0 -> PhotosFragment()
             else -> CollectionsFragment()
         }
     }

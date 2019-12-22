@@ -16,7 +16,7 @@ class PhotoDataSource {
     val downloadedPhoto: LiveData<PhotoResponse>
         get() = _downloadedPhoto
 
-    suspend fun fetchRandomPhoto(
+    suspend fun fetchPhoto(
         count: Int = 1
     ) {
         try {
