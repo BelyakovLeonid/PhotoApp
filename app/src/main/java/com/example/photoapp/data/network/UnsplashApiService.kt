@@ -4,10 +4,10 @@ import com.example.photoapp.data.network.response.collections.CollectionsListRes
 import com.example.photoapp.data.network.response.photos.random.PhotoResponse
 import com.example.photoapp.data.network.response.photos.response.ListResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -23,26 +23,25 @@ const val API_KEY = "cd1180255d7afef679adfe772daaa04b449166b9c5150b40f266e996789
 interface UnsplashApiService {
 
     @GET("photos/random")
-    fun getRandomPhoto(
+    suspend fun getRandomPhoto(
         @Query("count") count: Int
-    ): Deferred<List<PhotoResponse>>
+    ): Response<List<PhotoResponse>>
 
     @GET("photos")
-    fun getListPhotos(
+    suspend fun getListPhotos(
         @Query("page") page: Int,
         @Query("per_page") per_page: Int,
         @Query("order_by") order_by: String
-    ): Deferred<List<ListResponse>>
+    ): Response<List<ListResponse>>
 
     @GET("collections")
-    fun getCollections(
+    suspend fun getCollections(
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
-    ): Deferred<List<CollectionsListResponse>>
+    ): Response<List<CollectionsListResponse>>
 
     companion object {
-        operator fun invoke(
-        ): UnsplashApiService {
+        operator fun invoke(): UnsplashApiService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url
@@ -68,14 +67,15 @@ interface UnsplashApiService {
 
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
+//                .addInterceptor(connectivityInterceptor)
                 .addInterceptor(logInterceptor)
                 .build()
 
             return Retrofit.Builder()
                 .client(httpClient)
                 .baseUrl("https://api.unsplash.com/")
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
                 .create(UnsplashApiService::class.java)
         }

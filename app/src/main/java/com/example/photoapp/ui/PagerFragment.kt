@@ -8,21 +8,23 @@ import com.example.photoapp.R
 import com.example.photoapp.ui.adapters.PagerAdapter
 import com.example.photoapp.ui.base.ScopedFragment
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_pager.*
 
-class FlowFragment : ScopedFragment() {
+class PagerFragment : ScopedFragment() {
+
+    lateinit var listener: Router
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_pager, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewPager.adapter = PagerAdapter(fragmentManager!!, lifecycle)
+        viewPager.adapter = PagerAdapter(childFragmentManager, lifecycle, listener)
         TabLayoutMediator(
             tabLayout,
             viewPager,
@@ -33,4 +35,5 @@ class FlowFragment : ScopedFragment() {
                 }
             }).attach()
     }
+
 }

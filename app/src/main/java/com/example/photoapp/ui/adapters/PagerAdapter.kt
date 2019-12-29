@@ -6,18 +6,20 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.photoapp.ui.CollectionsFragment
 import com.example.photoapp.ui.PhotosFragment
+import com.example.photoapp.ui.Router
 
 class PagerAdapter(
     fm: FragmentManager,
-    l: Lifecycle
+    l: Lifecycle,
+    val listener: Router
 ) : FragmentStateAdapter(fm, l) {
 
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> PhotosFragment()
-            else -> CollectionsFragment()
+            0 -> PhotosFragment().also { it.listener = listener }
+            else -> CollectionsFragment().also { it.listener = listener }
         }
     }
 }

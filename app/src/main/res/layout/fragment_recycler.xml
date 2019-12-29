@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.CollectionsFragment">
 
     <androidx.constraintlayout.widget.Group
-        android:visibility="gone"
         android:id="@+id/progress_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,18 +18,18 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/progress_group"
         app:layout_constraintBottom_toBottomOf="@+id/progress_group"
         app:layout_constraintEnd_toEndOf="@+id/progress_group"
-        app:layout_constraintStart_toStartOf="@+id/progress_group" />
+        app:layout_constraintStart_toStartOf="@+id/progress_group"
+        app:layout_constraintTop_toTopOf="@+id/progress_group" />
 
     <TextView
         android:id="@+id/progress_text"
+        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading"
-        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_margin="8dp"
+        android:text="Loading"
         app:layout_constraintBottom_toBottomOf="@id/progress_group"
         app:layout_constraintEnd_toEndOf="@+id/progress_group"
         app:layout_constraintStart_toStartOf="@id/progress_group"
@@ -39,10 +38,10 @@
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/placeholder_group"
-        android:visibility="gone"
-        app:constraint_referenced_ids="placeholder_image,placeholder_text,placeholder_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
+        app:constraint_referenced_ids="placeholder_image,placeholder_text,placeholder_button"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,9 +59,10 @@
 
     <TextView
         android:id="@+id/placeholder_text"
-        android:text="No Internet Connection.\nPlease, try again."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="No Internet Connection.\nPlease, try again."
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/placeholder_group"
         app:layout_constraintEnd_toEndOf="@+id/placeholder_group"
         app:layout_constraintStart_toStartOf="@+id/placeholder_group"
@@ -71,9 +71,9 @@
 
     <Button
         android:id="@+id/placeholder_button"
-        android:text="Retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Retry"
         app:layout_constraintBottom_toBottomOf="@+id/placeholder_group"
         app:layout_constraintEnd_toEndOf="@+id/placeholder_group"
         app:layout_constraintStart_toStartOf="@+id/placeholder_group"
@@ -84,14 +84,13 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:visibility="visible"
-            android:id="@+id/collections_recycler"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
