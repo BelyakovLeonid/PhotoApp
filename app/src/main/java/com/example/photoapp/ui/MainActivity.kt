@@ -1,10 +1,10 @@
 package com.example.photoapp.ui
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.photoapp.R
 
-class MainActivity : FragmentActivity(), Router {
+class MainActivity : AppCompatActivity(), Router {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

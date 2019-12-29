@@ -1,9 +1,8 @@
 package com.example.photoapp.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import com.example.photoapp.R
 import com.example.photoapp.ui.adapters.PagerAdapter
 import com.example.photoapp.ui.base.ScopedFragment
@@ -21,6 +20,24 @@ class PagerFragment : ScopedFragment() {
         return inflater.inflate(R.layout.fragment_pager, container, false)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        (activity as AppCompatActivity).apply {
+            setSupportActionBar(toolbar)
+            setHasOptionsMenu(true)
+
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setHomeAsUpIndicator(R.drawable.ic_menu_black)
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        toolbar.inflateMenu(R.menu.toolbar_menu)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -35,5 +52,4 @@ class PagerFragment : ScopedFragment() {
                 }
             }).attach()
     }
-
 }
