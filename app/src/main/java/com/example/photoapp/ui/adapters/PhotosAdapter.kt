@@ -11,7 +11,7 @@ import com.example.photoapp.data.network.response.photos.response.ListResponse
 
 class PhotosAdapter(
     private val dataSet: List<ListResponse>,
-    private val onClick: () -> Unit
+    private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<PhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -25,7 +25,9 @@ class PhotosAdapter(
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photoItem = dataSet[position]
         Glide.with(holder.itemView).load(photoItem.urls.regular).into(holder.photoView)
-        holder.photoView.setOnClickListener { onClick.invoke() }
+        holder.photoView.setOnClickListener {
+            onClick.invoke(photoItem.id)
+        }
     }
 }
 

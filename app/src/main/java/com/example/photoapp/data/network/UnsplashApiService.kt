@@ -11,6 +11,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 const val API_KEY = "cd1180255d7afef679adfe772daaa04b449166b9c5150b40f266e9967891393a"
@@ -22,10 +23,10 @@ const val API_KEY = "cd1180255d7afef679adfe772daaa04b449166b9c5150b40f266e996789
 
 interface UnsplashApiService {
 
-    @GET("photos/random")
-    suspend fun getRandomPhoto(
-        @Query("count") count: Int
-    ): Response<List<PhotoResponse>>
+    @GET("photos/{id}")
+    suspend fun getPhotoById(
+        @Path("id") photoId: String
+    ): Response<PhotoResponse>
 
     @GET("photos")
     suspend fun getListPhotos(
@@ -39,6 +40,13 @@ interface UnsplashApiService {
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
     ): Response<List<CollectionsListResponse>>
+
+    @GET("collections/{id}/photos")
+    suspend fun getCollectionPhotos(
+        @Path("id") collectionId: Int,
+        @Query("page") page: Int,
+        @Query("per_page") per_page: Int
+    ): Response<List<ListResponse>>
 
     companion object {
         operator fun invoke(): UnsplashApiService {
@@ -67,7 +75,6 @@ interface UnsplashApiService {
 
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor(requestInterceptor)
-//                .addInterceptor(connectivityInterceptor)
                 .addInterceptor(logInterceptor)
                 .build()
 

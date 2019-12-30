@@ -1,4 +1,4 @@
-package com.example.photoapp.ui
+package com.example.photoapp.ui.photo.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photoapp.R
-import com.example.photoapp.ui.adapters.CollectionsAdapter
-import com.example.photoapp.ui.base.ScopedFragment
-import com.example.photoapp.ui.viewmodels.PhotosViewModel
+import com.example.photoapp.ui.adapters.PhotosAdapter
+import com.example.photoapp.ui.base.BaseFragment
+import com.example.photoapp.ui.base.Router
+import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
-class CollectionsFragment : ScopedFragment() {
-    lateinit var viewModel: PhotosViewModel
+class PhotoListFragment : BaseFragment() {
+    lateinit var specialViewModel: PhotoListViewModel
     lateinit var listener: Router
 
     override fun onCreateView(
@@ -27,18 +28,18 @@ class CollectionsFragment : ScopedFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(PhotosViewModel::class.java)
+        specialViewModel = ViewModelProviders.of(this).get(PhotoListViewModel::class.java)
         updateData()
 
-        viewModel.isNetworkErrorHappened.observe(this, Observer {
+        specialViewModel.isNetworkErrorHappened.observe(this, Observer {
             showNetworkError(it.getValueIfNotHandled())
         })
 
-        viewModel.collectionsLiveData.observe(this, Observer {
+        specialViewModel.photoListLiveData.observe(this, Observer {
             progress_group.visibility = View.GONE
             placeholder_group.visibility = View.GONE
             swipe_refresh_layout.visibility = View.VISIBLE
-            recycler_view.adapter = CollectionsAdapter(it, this::goToDetails)
+            recycler_view.adapter = PhotosAdapter(it, this::goToDetails)
             recycler_view.layoutManager = LinearLayoutManager(activity)
         })
 
@@ -52,8 +53,8 @@ class CollectionsFragment : ScopedFragment() {
         }
     }
 
-    fun updateData() {
-        viewModel.fetchCollections()
+    private fun updateData() {
+        specialViewModel.fetchPhotos()
     }
 
     private fun showNetworkError(isError: Boolean?) {
@@ -65,11 +66,13 @@ class CollectionsFragment : ScopedFragment() {
             swipe_refresh_layout.visibility = View.GONE
         } else {
             placeholder_group.visibility = View.GONE
-            Toast.makeText(context, "Collections updated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Photos updated", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun goToDetails() {
-        listener.navigateTo()
+    private fun goToDetails(photoSelectedId: String) {
+        commonViewModel.photoSelectedId = photoSelectedId
+        listener.navigateTo(PhotoDetailFragment())
     }
+
 }

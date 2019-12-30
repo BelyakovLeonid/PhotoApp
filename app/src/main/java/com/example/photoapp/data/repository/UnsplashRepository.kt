@@ -6,22 +6,27 @@ import com.example.photoapp.data.network.response.collections.CollectionsListRes
 import com.example.photoapp.data.network.response.photos.random.PhotoResponse
 import com.example.photoapp.data.network.response.photos.response.ListResponse
 
-class UnsplashRepository() : BaseRepository() {
+class UnsplashRepository : BaseRepository() {
 
     private val api = UnsplashApiService.invoke()
 
     suspend fun getListPhotos(): NetworkResult<List<ListResponse>> = safeApiCall(
         call = { api.getListPhotos(1, 10, "latest") },
-        errorMessage = "Error Fetching Photos"
+        errorMessage = "Error fetching photos"
     )
 
     suspend fun getCollections(): NetworkResult<List<CollectionsListResponse>> = safeApiCall(
         call = { api.getCollections(1, 10) },
-        errorMessage = "Error Fetching Collections"
+        errorMessage = "Error fetching collections"
     )
 
-    suspend fun getPhoto(): NetworkResult<List<PhotoResponse>> = safeApiCall(
-        call = { api.getRandomPhoto(1) },
-        errorMessage = "Error Fetching Collections"
+    suspend fun getPhoto(id: String): NetworkResult<PhotoResponse> = safeApiCall(
+        call = { api.getPhotoById(id) },
+        errorMessage = "Error fetching photo"
+    )
+
+    suspend fun getCollectionPhotos(id: Int): NetworkResult<List<ListResponse>> = safeApiCall(
+        call = { api.getCollectionPhotos(id, 1, 10) },
+        errorMessage = "Error fetching collection photos"
     )
 }

@@ -12,7 +12,7 @@ import com.example.photoapp.data.network.response.collections.CollectionsListRes
 
 class CollectionsAdapter(
     private val dataSet: List<CollectionsListResponse>,
-    private val onClick: () -> Unit
+    private val onClick: (CollectionsListResponse) -> Unit
 ) : RecyclerView.Adapter<CollectionsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionsViewHolder {
@@ -25,7 +25,7 @@ class CollectionsAdapter(
 
     override fun onBindViewHolder(holder: CollectionsViewHolder, position: Int) {
         val collectionItem = dataSet[position]
-        holder.itemView.setOnClickListener { onClick.invoke() }
+        holder.itemView.setOnClickListener { onClick.invoke(collectionItem) }
         holder.titleView.text = collectionItem.title
         holder.subtitleView.text = "${collectionItem.totalPhotos.toString()} photos"
         Glide.with(holder.itemView).load(collectionItem.coverPhoto.urls.regular)

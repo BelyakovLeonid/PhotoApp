@@ -3,13 +3,15 @@ package com.example.photoapp.ui
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import com.example.photoapp.R
 import com.example.photoapp.ui.adapters.PagerAdapter
-import com.example.photoapp.ui.base.ScopedFragment
+import com.example.photoapp.ui.base.BaseFragment
+import com.example.photoapp.ui.base.Router
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_pager.*
 
-class PagerFragment : ScopedFragment() {
+class PagerFragment : BaseFragment() {
 
     lateinit var listener: Router
 
@@ -35,7 +37,15 @@ class PagerFragment : ScopedFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        toolbar.inflateMenu(R.menu.toolbar_menu)
+        toolbar.inflateMenu(R.menu.home_menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.home -> drawer.openDrawer(GravityCompat.START)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

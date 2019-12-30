@@ -81,7 +81,7 @@
 
         <ImageView
             android:id="@+id/details_likes"
-            android:src="@drawable/ic_location_black"
+            android:src="@drawable/ic_favorite_black"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_margin="12dp"
