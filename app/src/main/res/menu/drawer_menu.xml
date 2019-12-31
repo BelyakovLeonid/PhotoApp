@@ -2,25 +2,47 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/drawer_main_navigation"
+        android:checkableBehavior="single">
         <item
-            android:id="@+id/toolbar_search"
-            android:icon="@drawable/ic_person_black"
-            android:title="Search"
+            android:id="@+id/drawer_photo_of_day"
+            android:icon="@drawable/ic_stars_black"
+            android:title="Photo of the day"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/drawer_home"
+            android:icon="@drawable/ic_home_black"
+            android:title="Home"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/drawer_collections"
+            android:icon="@drawable/ic_collections_black"
+            android:title="Collections"
             app:showAsAction="ifRoom" />
     </group>
 
-    <item android:title="Sub items">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:icon="@drawable/ic_share_black"
-                    android:title="Sub item 1" />
-                <item
-                    android:icon="@drawable/ic_earth_black"
-                    android:title="Sub item 2" />
-            </group>
-        </menu>
-    </item>
+    <group
+        android:id="@+id/drawer_second_navigation"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_support"
+            android:icon="@drawable/ic_favorite_black"
+            android:title="Support developer"
+            app:showAsAction="ifRoom" />
 
+        <item
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings_black"
+            android:title="Settings"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/drawer_info"
+            android:icon="@drawable/ic_info_black"
+            android:title="About"
+            app:showAsAction="ifRoom" />
+    </group>
 </menu>

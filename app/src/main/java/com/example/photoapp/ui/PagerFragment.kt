@@ -25,9 +25,10 @@ class PagerFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         (activity as AppCompatActivity).apply {
             setSupportActionBar(toolbar)
-            setHasOptionsMenu(true)
 
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
@@ -42,7 +43,7 @@ class PagerFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.home -> drawer.openDrawer(GravityCompat.START)
+            android.R.id.home -> drawer.openDrawer(GravityCompat.START)
         }
 
         return super.onOptionsItemSelected(item)
