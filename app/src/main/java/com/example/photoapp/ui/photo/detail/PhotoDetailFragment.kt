@@ -1,19 +1,20 @@
 package com.example.photoapp.ui.photo.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
 import com.example.photoapp.data.network.response.photos.random.PhotoResponse
+import com.example.photoapp.data.network.response.photos.response.ListResponse
 import com.example.photoapp.data.network.response.photos.response.PhotoLocation
 import com.example.photoapp.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_photo_details.*
 
 class PhotoDetailFragment : BaseFragment() {
+    lateinit var currentPhoto: ListResponse
     lateinit var specialViewModel: PhotoDetailViewModel
 
     override fun onCreateView(
@@ -26,10 +27,34 @@ class PhotoDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         specialViewModel = ViewModelProviders.of(this).get(PhotoDetailViewModel::class.java)
-        specialViewModel.fetchSinglePhoto(commonViewModel.photoSelectedId!!)
+        currentPhoto = commonViewModel.photoSelected!!
+        bindToolbar()
+        updateData()
+
         specialViewModel.photoDetailLiveData.observe(this, Observer {
             bindUI(it)
         })
+    }
+
+    private fun updateData() {
+        specialViewModel.fetchSinglePhoto(commonViewModel.photoSelectedId!!)
+    }
+
+    private fun bindToolbar() {
+        (activity as AppCompatActivity).apply {
+            setSupportActionBar(toolbar_photo_details)
+
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setHomeAsUpIndicator(R.drawable.ic_back_black)
+                setTitle("")
+            }
+        }
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        toolbar_photo_details.inflateMenu(R.menu.details_menu)
     }
 
     private fun bindUI(response: PhotoResponse) {
@@ -44,7 +69,7 @@ class PhotoDetailFragment : BaseFragment() {
     }
 
     private fun bindLocation(location: PhotoLocation?) {
-        if (location != null) {
+        if (location != null && !location.title.isNullOrEmpty()) {
             details_location_title.text = location.title
         } else {
             details_location_title.visibility = View.GONE
@@ -60,5 +85,4 @@ class PhotoDetailFragment : BaseFragment() {
             details_date.visibility = View.GONE
         }
     }
-
 }

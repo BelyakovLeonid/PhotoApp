@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
 import com.example.photoapp.data.network.response.collections.CollectionsListResponse
+import com.example.photoapp.data.network.response.photos.response.ListResponse
 import com.example.photoapp.ui.adapters.PhotosAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
@@ -59,7 +60,6 @@ class CollectionDetailFragment : BaseFragment() {
     private fun bindToolbar() {
         (activity as AppCompatActivity).apply {
             setSupportActionBar(toolbar_collection_details)
-            setHasOptionsMenu(true)
 
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
@@ -68,6 +68,7 @@ class CollectionDetailFragment : BaseFragment() {
             }
         }
 
+        setHasOptionsMenu(true)
         Glide.with(view!!).load(currentCollection?.user?.profileImage?.medium).into(collection_icon)
         collection_description.text = currentCollection?.description
         collection_name.text = "By ${currentCollection?.user?.name}"
@@ -94,8 +95,9 @@ class CollectionDetailFragment : BaseFragment() {
 //        }
     }
 
-    private fun goToDetails(photoSelectedId: String) {
-        commonViewModel.photoSelectedId = photoSelectedId
+    private fun goToDetails(photoSelected: ListResponse) {
+        commonViewModel.photoSelected = photoSelected
+        commonViewModel.photoSelectedId = photoSelected.id
         listener.navigateTo(PhotoDetailFragment())
     }
 }
