@@ -2,14 +2,14 @@ package com.example.photoapp.ui.photo.detail
 
 import androidx.lifecycle.MutableLiveData
 import com.example.photoapp.data.network.NetworkResult
-import com.example.photoapp.data.network.response.photos.random.PhotoResponse
+import com.example.photoapp.data.network.response.photos.detailed.PhotoDetailResponse
 import com.example.photoapp.local.Event
 import com.example.photoapp.ui.base.ScopedViewModel
 import kotlinx.coroutines.launch
 
 class PhotoDetailViewModel : ScopedViewModel() {
 
-    val photoDetailLiveData = MutableLiveData<PhotoResponse>()
+    val photoDetailLiveData = MutableLiveData<PhotoDetailResponse>()
     val isNetworkErrorHappened = MutableLiveData<Event<Boolean?>>()
 
     fun fetchSinglePhoto(id: String) {

@@ -6,7 +6,6 @@ import java.io.IOException
 
 open class BaseRepository {
 
-
     suspend fun <T : Any> safeApiCall(
         call: suspend () -> Response<T>,
         errorMessage: String

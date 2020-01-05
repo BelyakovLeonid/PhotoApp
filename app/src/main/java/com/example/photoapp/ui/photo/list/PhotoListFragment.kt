@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photoapp.R
-import com.example.photoapp.data.network.response.photos.response.ListResponse
+import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.ui.adapters.PhotosAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
@@ -71,7 +71,7 @@ class PhotoListFragment : BaseFragment() {
         }
     }
 
-    private fun goToDetails(photoSelected: ListResponse) {
+    private fun goToDetails(photoSelected: PhotoResponse) {
         commonViewModel.photoSelected = photoSelected
         commonViewModel.photoSelectedId = photoSelected.id
         listener.navigateTo(PhotoDetailFragment())

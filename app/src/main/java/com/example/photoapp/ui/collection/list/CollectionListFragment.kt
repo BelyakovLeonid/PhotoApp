@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photoapp.R
-import com.example.photoapp.data.network.response.collections.CollectionsListResponse
+import com.example.photoapp.data.network.response.collections.CollectionResponse
 import com.example.photoapp.ui.adapters.CollectionsAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
@@ -54,7 +54,7 @@ class CollectionListFragment : BaseFragment() {
         }
     }
 
-    fun updateData() {
+    private fun updateData() {
         specialViewModel.fetchCollections()
     }
 
@@ -71,7 +71,7 @@ class CollectionListFragment : BaseFragment() {
         }
     }
 
-    private fun goToDetails(collectionSelected: CollectionsListResponse) {
+    private fun goToDetails(collectionSelected: CollectionResponse) {
         commonViewModel.collectionSelected = collectionSelected
         commonViewModel.collectionSelectedId = collectionSelected.id
         listener.navigateTo(CollectionDetailFragment().apply {

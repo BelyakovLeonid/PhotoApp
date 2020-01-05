@@ -1,19 +1,16 @@
-package com.example.photoapp.data.network.response.photos.random
+package com.example.photoapp.data.network.response.photos.detailed
 
 
-import com.example.photoapp.data.network.response.photos.response.Exif
-import com.example.photoapp.data.network.response.photos.response.PhotoLinks
-import com.example.photoapp.data.network.response.photos.response.PhotoLocation
+import com.example.photoapp.data.network.response.Urls
+import com.example.photoapp.data.network.response.User
 import com.google.gson.annotations.SerializedName
 
-data class PhotoResponse(
+data class PhotoDetailResponse(
     val id: String,
     @SerializedName("created_at")
     val createdAt: String,
     @SerializedName("updated_at")
     val updatedAt: String,
-    @SerializedName("promoted_at")
-    val promotedAt: String,
     val width: Int,
     val height: Int,
     val color: String,
@@ -24,10 +21,6 @@ data class PhotoResponse(
     val links: PhotoLinks,
     val categories: List<Any>,
     val likes: Int,
-    @SerializedName("liked_by_user")
-    val likedByUser: Boolean,
-    @SerializedName("current_user_collections")
-    val currentUserCollections: List<Any>,
     val user: User,
     val exif: Exif,
     val location: PhotoLocation,

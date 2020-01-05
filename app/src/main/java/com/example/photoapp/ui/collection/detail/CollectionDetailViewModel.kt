@@ -1,15 +1,15 @@
 package com.example.photoapp.ui.collection.detail
 
 import androidx.lifecycle.MutableLiveData
+import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.data.network.NetworkResult
-import com.example.photoapp.data.network.response.photos.response.ListResponse
 import com.example.photoapp.local.Event
 import com.example.photoapp.ui.base.ScopedViewModel
 import kotlinx.coroutines.launch
 
 class CollectionDetailViewModel : ScopedViewModel() {
 
-    val collectionPhotosLiveData = MutableLiveData<List<ListResponse>>()
+    val collectionPhotosLiveData = MutableLiveData<List<PhotoResponse>>()
     val isNetworkErrorHappened = MutableLiveData<Event<Boolean?>>()
 
     fun fetchCollectionPhotos(id: Int) {

@@ -8,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
-import com.example.photoapp.data.network.response.collections.CollectionsListResponse
+import com.example.photoapp.data.network.response.collections.CollectionResponse
 
 class CollectionsAdapter(
-    private val dataSet: List<CollectionsListResponse>,
-    private val onClick: (CollectionsListResponse) -> Unit
+    private val dataSet: List<CollectionResponse>,
+    private val onClick: (CollectionResponse) -> Unit
 ) : RecyclerView.Adapter<CollectionsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionsViewHolder {

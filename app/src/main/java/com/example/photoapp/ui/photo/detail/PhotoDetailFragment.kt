@@ -1,5 +1,7 @@
 package com.example.photoapp.ui.photo.detail
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -7,14 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
-import com.example.photoapp.data.network.response.photos.random.PhotoResponse
-import com.example.photoapp.data.network.response.photos.response.ListResponse
-import com.example.photoapp.data.network.response.photos.response.PhotoLocation
+import com.example.photoapp.data.db.entities.PhotoResponse
+import com.example.photoapp.data.network.response.photos.detailed.PhotoDetailResponse
+import com.example.photoapp.data.network.response.photos.detailed.PhotoLocation
 import com.example.photoapp.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_photo_details.*
 
 class PhotoDetailFragment : BaseFragment() {
-    lateinit var currentPhoto: ListResponse
+    lateinit var currentPhoto: PhotoResponse
     lateinit var specialViewModel: PhotoDetailViewModel
 
     override fun onCreateView(
@@ -57,10 +59,13 @@ class PhotoDetailFragment : BaseFragment() {
         toolbar_photo_details.inflateMenu(R.menu.details_menu)
     }
 
-    private fun bindUI(response: PhotoResponse) {
-        Glide.with(view!!).load(response.urls.regular).into(details_image)
+    private fun bindUI(response: PhotoDetailResponse) {
+        Glide.with(view!!)
+            .load(response.urls.regular)
+            .placeholder(ColorDrawable(Color.parseColor(response.color)))
+            .into(details_image)
         Glide.with(view!!).load(response.user.profileImage.small).into(details_profile)
-        details_profile_title.text = "${response.user.firstName}  ${response.user.lastName}"
+        details_profile_title.text = response.user.name
         details_likes_title.text = "${response.likes} Likes"
         details_downloads_title.text = "${response.downloads} Downloads"
         details_color_title.text = response.color

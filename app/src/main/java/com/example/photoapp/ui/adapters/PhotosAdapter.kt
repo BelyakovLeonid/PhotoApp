@@ -7,11 +7,11 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
-import com.example.photoapp.data.network.response.photos.response.ListResponse
+import com.example.photoapp.data.db.entities.PhotoResponse
 
 class PhotosAdapter(
-    private val dataSet: List<ListResponse>,
-    private val onClick: (ListResponse) -> Unit
+    private val dataSet: List<PhotoResponse>,
+    private val onClick: (PhotoResponse) -> Unit
 ) : RecyclerView.Adapter<PhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -24,7 +24,10 @@ class PhotosAdapter(
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photoItem = dataSet[position]
-        Glide.with(holder.itemView).load(photoItem.urls.regular).into(holder.photoView)
+        Glide.with(holder.itemView)
+            .load(photoItem.urls.regular)
+            .into(holder.photoView)
+
         holder.photoView.setOnClickListener {
             onClick.invoke(photoItem)
         }

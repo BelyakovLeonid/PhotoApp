@@ -1,8 +1,8 @@
 package com.example.photoapp.data.network
 
-import com.example.photoapp.data.network.response.collections.CollectionsListResponse
-import com.example.photoapp.data.network.response.photos.random.PhotoResponse
-import com.example.photoapp.data.network.response.photos.response.ListResponse
+import com.example.photoapp.data.db.entities.PhotoResponse
+import com.example.photoapp.data.network.response.collections.CollectionResponse
+import com.example.photoapp.data.network.response.photos.detailed.PhotoDetailResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -26,27 +26,27 @@ interface UnsplashApiService {
     @GET("photos/{id}")
     suspend fun getPhotoById(
         @Path("id") photoId: String
-    ): Response<PhotoResponse>
+    ): Response<PhotoDetailResponse>
 
     @GET("photos")
     suspend fun getListPhotos(
         @Query("page") page: Int,
         @Query("per_page") per_page: Int,
         @Query("order_by") order_by: String
-    ): Response<List<ListResponse>>
+    ): Response<List<PhotoResponse>>
 
     @GET("collections")
     suspend fun getCollections(
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
-    ): Response<List<CollectionsListResponse>>
+    ): Response<List<CollectionResponse>>
 
     @GET("collections/{id}/photos")
     suspend fun getCollectionPhotos(
         @Path("id") collectionId: Int,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
-    ): Response<List<ListResponse>>
+    ): Response<List<PhotoResponse>>
 
     companion object {
         operator fun invoke(): UnsplashApiService {

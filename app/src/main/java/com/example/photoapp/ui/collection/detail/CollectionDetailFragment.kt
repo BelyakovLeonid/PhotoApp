@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
-import com.example.photoapp.data.network.response.collections.CollectionsListResponse
-import com.example.photoapp.data.network.response.photos.response.ListResponse
+import com.example.photoapp.data.db.entities.PhotoResponse
+import com.example.photoapp.data.network.response.collections.CollectionResponse
 import com.example.photoapp.ui.adapters.PhotosAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_collection_details.*
 class CollectionDetailFragment : BaseFragment() {
     lateinit var specialViewModel: CollectionDetailViewModel
     lateinit var listener: Router
-    var currentCollection: CollectionsListResponse? = null
+    var currentCollection: CollectionResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,7 +95,7 @@ class CollectionDetailFragment : BaseFragment() {
 //        }
     }
 
-    private fun goToDetails(photoSelected: ListResponse) {
+    private fun goToDetails(photoSelected: PhotoResponse) {
         commonViewModel.photoSelected = photoSelected
         commonViewModel.photoSelectedId = photoSelected.id
         listener.navigateTo(PhotoDetailFragment())
