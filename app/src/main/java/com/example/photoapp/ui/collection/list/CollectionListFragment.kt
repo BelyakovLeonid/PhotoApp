@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.photoapp.R
-import com.example.photoapp.data.network.response.collections.CollectionResponse
-import com.example.photoapp.ui.adapters.CollectionsAdapter
+import com.example.photoapp.data.db.entities.CollectionResponse
+import com.example.photoapp.ui.adapters.CollectionListAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
 import com.example.photoapp.ui.collection.detail.CollectionDetailFragment
@@ -19,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_recycler.*
 class CollectionListFragment : BaseFragment() {
     lateinit var specialViewModel: CollectionListViewModel
     lateinit var listener: Router
+    private val adapter = CollectionListAdapter(this::goToDetails)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,19 +29,18 @@ class CollectionListFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        recycler_view.adapter = adapter
         specialViewModel = ViewModelProviders.of(this).get(CollectionListViewModel::class.java)
-        updateData()
 
-        specialViewModel.isNetworkErrorHappened.observe(this, Observer {
-            showNetworkError(it.getValueIfNotHandled())
+        specialViewModel.networkErrors.observe(this, Observer {
+            showNetworkError(it.isNotEmpty())
         })
 
-        specialViewModel.collectionListLiveData.observe(this, Observer {
+        specialViewModel.collections.observe(this, Observer {
+            adapter.submitList(it)
             progress_group.visibility = View.GONE
             placeholder_group.visibility = View.GONE
             swipe_refresh_layout.visibility = View.VISIBLE
-            recycler_view.adapter = CollectionsAdapter(it, this::goToDetails)
-            recycler_view.layoutManager = LinearLayoutManager(activity)
         })
 
         swipe_refresh_layout.setOnRefreshListener {
@@ -52,6 +51,8 @@ class CollectionListFragment : BaseFragment() {
         placeholder_button.setOnClickListener {
             updateData()
         }
+
+        updateData()
     }
 
     private fun updateData() {

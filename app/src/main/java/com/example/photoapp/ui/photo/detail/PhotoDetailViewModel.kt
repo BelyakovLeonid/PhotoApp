@@ -1,9 +1,9 @@
 package com.example.photoapp.ui.photo.detail
 
 import androidx.lifecycle.MutableLiveData
-import com.example.photoapp.data.network.NetworkResult
-import com.example.photoapp.data.network.response.photos.detailed.PhotoDetailResponse
+import com.example.photoapp.data.network.response.PhotoDetailResponse
 import com.example.photoapp.local.Event
+import com.example.photoapp.local.NetworkResult
 import com.example.photoapp.ui.base.ScopedViewModel
 import kotlinx.coroutines.launch
 

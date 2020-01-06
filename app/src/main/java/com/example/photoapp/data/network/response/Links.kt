@@ -1,4 +1,4 @@
-package com.example.photoapp.data.network.response.collections
+package com.example.photoapp.data.network.response
 
 data class Links(
     val self: String,

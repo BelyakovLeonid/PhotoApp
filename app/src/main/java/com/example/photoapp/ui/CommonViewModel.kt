@@ -1,7 +1,7 @@
 package com.example.photoapp.ui
 
+import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.data.network.response.collections.CollectionResponse
 import com.example.photoapp.ui.base.ScopedViewModel
 
 class CommonViewModel : ScopedViewModel() {

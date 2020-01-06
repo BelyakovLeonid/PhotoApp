@@ -1,6 +1,6 @@
 package com.example.photoapp.data.repository
 
-import com.example.photoapp.data.network.NetworkResult
+import com.example.photoapp.local.NetworkResult
 import retrofit2.Response
 import java.io.IOException
 

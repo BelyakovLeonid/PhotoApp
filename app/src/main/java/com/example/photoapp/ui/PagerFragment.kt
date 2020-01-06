@@ -3,6 +3,7 @@ package com.example.photoapp.ui
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.GravityCompat
 import com.example.photoapp.R
 import com.example.photoapp.ui.adapters.PagerAdapter
@@ -44,6 +45,12 @@ class PagerFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> drawer.openDrawer(GravityCompat.START)
+            R.id.toolbar_sort -> {
+                val popup = PopupMenu(this.context!!, view!!.findViewById(R.id.toolbar_sort))
+                val inflater: MenuInflater = popup.menuInflater
+                inflater.inflate(R.menu.actions_menu, popup.menu)
+                popup.show()
+            }
         }
 
         return super.onOptionsItemSelected(item)

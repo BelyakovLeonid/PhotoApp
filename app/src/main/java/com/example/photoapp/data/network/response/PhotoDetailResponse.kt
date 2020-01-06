@@ -1,8 +1,6 @@
-package com.example.photoapp.data.network.response.photos.detailed
+package com.example.photoapp.data.network.response
 
 
-import com.example.photoapp.data.network.response.Urls
-import com.example.photoapp.data.network.response.User
 import com.google.gson.annotations.SerializedName
 
 data class PhotoDetailResponse(

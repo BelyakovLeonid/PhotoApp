@@ -1,4 +1,4 @@
-package com.example.photoapp.data.network
+package com.example.photoapp.local
 
 sealed class NetworkResult<out T : Any> {
     data class Success<out T : Any>(val data: T) : NetworkResult<T>()

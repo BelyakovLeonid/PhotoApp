@@ -13,5 +13,4 @@
         android:icon="@drawable/ic_sort_black"
         android:title="SortBy"
         app:showAsAction="ifRoom" />
-
 </menu>

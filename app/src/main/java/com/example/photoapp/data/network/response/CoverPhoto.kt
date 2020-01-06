@@ -1,11 +1,12 @@
-package com.example.photoapp.data.network.response.collections
+package com.example.photoapp.data.network.response
 
-import com.example.photoapp.data.network.response.Urls
+import androidx.room.Embedded
 
 data class CoverPhoto(
     val id: String,
     val width: Int,
     val height: Int,
     val color: String,
+    @Embedded(prefix = "urls_")
     val urls: Urls
 )

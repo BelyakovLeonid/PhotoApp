@@ -1,28 +1,29 @@
 package com.example.photoapp.ui.collection.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.PagedList
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.data.network.NetworkResult
-import com.example.photoapp.local.Event
+import com.example.photoapp.local.RepositoryListResult
 import com.example.photoapp.ui.base.ScopedViewModel
-import kotlinx.coroutines.launch
 
 class CollectionDetailViewModel : ScopedViewModel() {
-
-    val collectionPhotosLiveData = MutableLiveData<List<PhotoResponse>>()
-    val isNetworkErrorHappened = MutableLiveData<Event<Boolean?>>()
-
-    fun fetchCollectionPhotos(id: Int) {
-        scope.launch(handler) {
-            val result = repository.getCollectionPhotos(id)
-            when (result) {
-                is NetworkResult.Success -> {
-                    isNetworkErrorHappened.postValue(Event(false))
-                    collectionPhotosLiveData.postValue(result.data)
-                }
-                is NetworkResult.Error ->
-                    isNetworkErrorHappened.postValue(Event(true))
-            }
+    private val collectionIdLiveData = MutableLiveData<Int>()
+    private val photoListResult: LiveData<RepositoryListResult<PhotoResponse>> =
+        Transformations.map(collectionIdLiveData) {
+            repository.getCollectionPhotos(it, scope)
         }
+
+    val photos: LiveData<PagedList<PhotoResponse>> =
+        Transformations.switchMap(photoListResult) {
+            it.data
+        }
+    val networkErrors: LiveData<String> =
+        Transformations.switchMap(photoListResult) { it.networkErrors }
+
+
+    fun fetchPhotos(collectionId: Int) {
+        collectionIdLiveData.postValue(collectionId)
     }
 }

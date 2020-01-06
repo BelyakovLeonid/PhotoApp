@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.data.network.response.photos.detailed.PhotoDetailResponse
-import com.example.photoapp.data.network.response.photos.detailed.PhotoLocation
+import com.example.photoapp.data.network.response.PhotoDetailResponse
+import com.example.photoapp.data.network.response.PhotoLocation
 import com.example.photoapp.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_photo_details.*
 

@@ -1,8 +1,8 @@
 package com.example.photoapp.data.network
 
+import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.data.network.response.collections.CollectionResponse
-import com.example.photoapp.data.network.response.photos.detailed.PhotoDetailResponse
+import com.example.photoapp.data.network.response.PhotoDetailResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -36,7 +36,7 @@ interface UnsplashApiService {
     ): Response<List<PhotoResponse>>
 
     @GET("collections")
-    suspend fun getCollections(
+    suspend fun getListCollections(
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
     ): Response<List<CollectionResponse>>

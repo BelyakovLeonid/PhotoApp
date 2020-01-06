@@ -1,28 +1,29 @@
 package com.example.photoapp.ui.collection.list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.photoapp.data.network.NetworkResult
-import com.example.photoapp.data.network.response.collections.CollectionResponse
-import com.example.photoapp.local.Event
+import androidx.lifecycle.Transformations
+import androidx.paging.PagedList
+import com.example.photoapp.data.db.entities.CollectionResponse
+import com.example.photoapp.local.RepositoryListResult
 import com.example.photoapp.ui.base.ScopedViewModel
-import kotlinx.coroutines.launch
 
 class CollectionListViewModel : ScopedViewModel() {
 
-    val collectionListLiveData = MutableLiveData<List<CollectionResponse>>()
-    val isNetworkErrorHappened = MutableLiveData<Event<Boolean?>>()
-
-    fun fetchCollections() {
-        scope.launch(handler) {
-            val result = repository.getCollections()
-            when (result) {
-                is NetworkResult.Success -> {
-                    isNetworkErrorHappened.postValue(Event(false))
-                    collectionListLiveData.postValue(result.data)
-                }
-                is NetworkResult.Error ->
-                    isNetworkErrorHappened.postValue(Event(true))
-            }
+    private val sortByLiveData = MutableLiveData<String>()
+    private val collectionListResult: LiveData<RepositoryListResult<CollectionResponse>> =
+        Transformations.map(sortByLiveData) {
+            repository.getCollectionsList(scope)
         }
+
+    val collections: LiveData<PagedList<CollectionResponse>> =
+        Transformations.switchMap(collectionListResult) {
+            it.data
+        }
+    val networkErrors: LiveData<String> =
+        Transformations.switchMap(collectionListResult) { it.networkErrors }
+
+    fun fetchCollections(sortBy: String = "latest") { //todo
+        sortByLiveData.postValue(sortBy)
     }
 }

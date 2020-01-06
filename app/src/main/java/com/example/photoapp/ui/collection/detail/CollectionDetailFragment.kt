@@ -5,20 +5,21 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
+import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.data.network.response.collections.CollectionResponse
-import com.example.photoapp.ui.adapters.PhotosAdapter
+import com.example.photoapp.ui.adapters.PhotoListAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
 import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
 import kotlinx.android.synthetic.main.fragment_collection_details.*
 
 class CollectionDetailFragment : BaseFragment() {
-    lateinit var specialViewModel: CollectionDetailViewModel
     lateinit var listener: Router
+    private lateinit var specialViewModel: CollectionDetailViewModel
+    private val adapter = PhotoListAdapter(this::goToDetails)
+
     var currentCollection: CollectionResponse? = null
 
     override fun onCreateView(
@@ -30,23 +31,22 @@ class CollectionDetailFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        recycler_collection_details.adapter = adapter
         specialViewModel = ViewModelProviders.of(this).get(CollectionDetailViewModel::class.java)
         currentCollection = commonViewModel.collectionSelected
         bindToolbar()
-        updateData()
 
-        specialViewModel.isNetworkErrorHappened.observe(this, Observer {
-            showNetworkError(it.getValueIfNotHandled())
+        specialViewModel.networkErrors.observe(this, Observer {
+            showNetworkError(it.isNotEmpty())
         })
 
-        specialViewModel.collectionPhotosLiveData.observe(this, Observer {
-            //            progress_group.visibility = View.GONE
+        specialViewModel.photos.observe(this, Observer {
+            adapter.submitList(it)
+//            progress_group.visibility = View.GONE
 //            placeholder_group.visibility = View.GONE
 //            swipe_refresh_layout.visibility = View.VISIBLE
-            recycler_collection_details.adapter = PhotosAdapter(it, this::goToDetails)
-            recycler_collection_details.layoutManager = LinearLayoutManager(activity)
         })
-
+//
 //        swipe_refresh_layout.setOnRefreshListener {
 //            updateData()
 //            swipe_refresh_layout.isRefreshing = false
@@ -55,6 +55,8 @@ class CollectionDetailFragment : BaseFragment() {
 //        placeholder_button.setOnClickListener {
 //            updateData()
 //        }
+
+        updateData()
     }
 
     private fun bindToolbar() {
@@ -79,7 +81,7 @@ class CollectionDetailFragment : BaseFragment() {
     }
 
     private fun updateData() {
-        specialViewModel.fetchCollectionPhotos(commonViewModel.collectionSelectedId!!)
+        specialViewModel.fetchPhotos(commonViewModel.collectionSelectedId!!)
     }
 
     private fun showNetworkError(isError: Boolean?) {

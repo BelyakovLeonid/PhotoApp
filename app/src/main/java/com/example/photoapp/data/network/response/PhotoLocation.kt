@@ -1,4 +1,4 @@
-package com.example.photoapp.data.network.response.photos.detailed
+package com.example.photoapp.data.network.response
 
 data class PhotoLocation(
     val title: String,
