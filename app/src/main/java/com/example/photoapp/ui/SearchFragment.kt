@@ -3,7 +3,6 @@ package com.example.photoapp.ui
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import com.example.photoapp.R
 import com.example.photoapp.local.adapters.PagerAdapter
 import com.example.photoapp.ui.base.BaseFragment
@@ -12,7 +11,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_pager.*
 
 class SearchFragment : BaseFragment() {
-
     lateinit var router: Router
 
     override fun onCreateView(
@@ -26,6 +24,7 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewPager.adapter = PagerAdapter(childFragmentManager, lifecycle, router)
+
         TabLayoutMediator(
             tabLayout,
             viewPager,
@@ -46,20 +45,24 @@ class SearchFragment : BaseFragment() {
 
             supportActionBar?.apply {
                 title = ""
-//                setDisplayHomeAsUpEnabled(true)
-//                setHomeAsUpIndicator(R.drawable.ic_menu_black)
+                setDisplayHomeAsUpEnabled(true)
+                setHomeAsUpIndicator(R.drawable.ic_back_black)
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         toolbar.inflateMenu(R.menu.search_menu)
+        menu.findItem(R.id.menu_search).actionView.requestFocus()
+    }
 
-        view?.findViewById<SearchView>(R.id.menu_search)?.apply {
-            //todo not working for now
-            setIconifiedByDefault(false)
-            queryHint = "Search"
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                router.navigateBack()
+            }
         }
+        return true
     }
 
 }

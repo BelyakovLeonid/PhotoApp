@@ -10,10 +10,10 @@ import com.example.photoapp.ui.base.ScopedViewModel
 
 class SearchPhotosViewModel : ScopedViewModel() {
 
-    private val sortByLiveData = MutableLiveData<String>()
+    private val queryLiveData = MutableLiveData<String>()
     private val photoListResult: LiveData<RepositoryListResult<PhotoResponse>> =
-        Transformations.map(sortByLiveData) {
-            repository.getPhotosList(it, scope)
+        Transformations.map(queryLiveData) {
+            repository.searchPhotos(it, scope)
         }
 
     val photos: LiveData<PagedList<PhotoResponse>> =
@@ -24,7 +24,7 @@ class SearchPhotosViewModel : ScopedViewModel() {
         Transformations.switchMap(photoListResult) { it.networkErrors }
 
 
-    fun fetchPhotos(sortBy: String = "latest") {
-        sortByLiveData.postValue(sortBy)
+    fun fetchPhotos(search: String = "") {
+        queryLiveData.postValue(search)
     }
 }

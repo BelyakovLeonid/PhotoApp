@@ -3,6 +3,7 @@ package com.example.photoapp.ui
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.example.photoapp.R
 import com.example.photoapp.ui.base.Router
@@ -12,26 +13,49 @@ class MainActivity : AppCompatActivity(), Router {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        navigateTo(FlowFragment())
+
+        val destinationFragment = PagerFragment().also { it.router = this }
+        navigateTo(destinationFragment, false)
     }
 
     override fun onBackPressed() {
-//        super.onBackPressed()
-        val currentFr =
-            supportFragmentManager.findFragmentById(R.id.main_flow_fragment) as FlowFragment
-        currentFr.onBackPressed()
+        navigateBack()
     }
 
-    override fun navigateTo(destination: Fragment) {
-        supportFragmentManager.beginTransaction()
+    override fun navigateTo(destination: Fragment, addToBackStack: Boolean) {
+        val transaction = supportFragmentManager
+            .beginTransaction()
             .replace(R.id.main_flow_fragment, destination)
-            .commit()
+
+        if (addToBackStack)
+            transaction.addToBackStack(null)
+
+        transaction.commit()
     }
 
     override fun navigateWithSharedElement(
         sharedView: View,
-        destination: Fragment
+        destination: Fragment,
+        addToBackStack: Boolean
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val transaction = supportFragmentManager
+            .beginTransaction()
+            .setReorderingAllowed(false) // when true, there some problems with resyclerView shared transition
+            .addSharedElement(sharedView, ViewCompat.getTransitionName(sharedView)!!)
+            .replace(R.id.main_flow_fragment, destination)
+
+        if (addToBackStack)
+            transaction.addToBackStack(null)
+
+        transaction.commit()
+    }
+
+    override fun navigateBack() {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager
+                .popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

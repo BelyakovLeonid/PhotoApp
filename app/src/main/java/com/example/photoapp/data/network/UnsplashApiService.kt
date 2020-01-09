@@ -35,8 +35,22 @@ interface UnsplashApiService {
         @Query("order_by") order_by: String
     ): Response<List<PhotoResponse>>
 
+    @GET("search/photos")
+    suspend fun searchPhotos(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("per_page") per_page: Int
+    ): Response<List<PhotoResponse>>
+
     @GET("collections")
     suspend fun getListCollections(
+        @Query("page") page: Int,
+        @Query("per_page") per_page: Int
+    ): Response<List<CollectionResponse>>
+
+    @GET("search/collections")
+    suspend fun searchCollections(
+        @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
     ): Response<List<CollectionResponse>>

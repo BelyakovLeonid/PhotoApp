@@ -6,9 +6,19 @@
         <item name="android:overlapAnchor">true</item>
         <item name="android:dropDownVerticalOffset">0dp</item>
         <item name="android:dropDownHorizontalOffset">0dp</item>
+        <item name="searchViewStyle">@style/CustomSearchViewStyle</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+        <item name="iconifiedByDefault">false</item>
+        <item name="queryHint">Search</item>
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="searchHintIcon">@null</item>
+        <item name="searchIcon">@null</item>
+        <item name="android:icon">@null</item>
     </style>
 
 </resources>

@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.GravityCompat
+import androidx.transition.Slide
+import androidx.viewpager2.widget.ViewPager2
 import com.example.photoapp.R
 import com.example.photoapp.local.adapters.PagerAdapter
 import com.example.photoapp.ui.base.BaseFragment
@@ -22,6 +24,34 @@ class PagerFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_pager, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewPager.apply {
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    when (position) {
+                        0 -> drawer_navigation_view.setCheckedItem(R.id.drawer_home)
+                        else -> drawer_navigation_view.setCheckedItem(R.id.drawer_collections)
+                    }
+                }
+            })
+
+            adapter = PagerAdapter(childFragmentManager, lifecycle, router)
+        }
+
+        TabLayoutMediator(
+            tabLayout,
+            viewPager,
+            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+                when (position) {
+                    0 -> tab.text = "Home"
+                    1 -> tab.text = "Collections"
+                }
+            }).attach()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -50,10 +80,12 @@ class PagerFragment : BaseFragment() {
                     Toast.makeText(this.context, "one", Toast.LENGTH_SHORT).show()
                 }
                 R.id.drawer_home -> {
-                    Toast.makeText(this.context, "two", Toast.LENGTH_SHORT).show()
+                    drawer.closeDrawer(GravityCompat.START)
+                    viewPager.setCurrentItem(0, true)
                 }
                 R.id.drawer_collections -> {
-                    Toast.makeText(this.context, "three", Toast.LENGTH_SHORT).show()
+                    drawer.closeDrawer(GravityCompat.START)
+                    viewPager.setCurrentItem(1, true)
                 }
                 R.id.drawer_support -> {
                     Toast.makeText(this.context, "four", Toast.LENGTH_SHORT).show()
@@ -85,21 +117,6 @@ class PagerFragment : BaseFragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewPager.adapter = PagerAdapter(childFragmentManager, lifecycle, router)
-        TabLayoutMediator(
-            tabLayout,
-            viewPager,
-            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-                when (position) {
-                    0 -> tab.text = "Home"
-                    1 -> tab.text = "Collections"
-                }
-            }).attach()
-    }
-
     private fun showSortSubMenu() {
         val popup = PopupMenu(this.context!!, view!!.findViewById(R.id.toolbar_sort))
         val inflater: MenuInflater = popup.menuInflater
@@ -108,7 +125,10 @@ class PagerFragment : BaseFragment() {
     }
 
     private fun goToSearch() {
-        val destinationFragment = SearchFragment().also { it.router = router }
+        val destinationFragment = SearchFragment().also {
+            it.router = router
+            it.enterTransition = Slide(Gravity.END).setDuration(300)
+        }
         router.navigateTo(destinationFragment)
     }
 }

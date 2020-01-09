@@ -1,5 +1,7 @@
 package com.example.photoapp.ui.photo.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -74,6 +76,34 @@ class PhotoDetailFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         toolbar_photo_details.inflateMenu(R.menu.details_menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                router.navigateBack()
+            }
+            R.id.toolbar_browser -> {
+                openBrowser()
+            }
+            R.id.toolbar_share -> {
+                sharePhoto()
+            }
+        }
+        return true
+    }
+
+    private fun openBrowser() { //todo проверку
+        val intent = Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(currentPhoto.links.html) }
+        startActivity(intent)
+    }
+
+    private fun sharePhoto() {  //todo проверку
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_TEXT, currentPhoto.links.html)
+            type = "text/html"
+        }
+        startActivity(intent)
     }
 
     private fun bindUI(response: PhotoDetailResponse) {

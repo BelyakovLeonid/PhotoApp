@@ -4,6 +4,7 @@ package com.example.photoapp.data.db.entities
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.photoapp.data.db.entities.PhotoResponse.Companion.DEFAULT_TAG
 import com.example.photoapp.data.network.response.CoverPhoto
 import com.example.photoapp.data.network.response.Links
 import com.example.photoapp.data.network.response.User
@@ -31,6 +32,7 @@ data class CollectionResponse(
     @Embedded(prefix = "links_")
     val links: Links
 ) {
+    var tag: String = DEFAULT_TAG
     var timeCreated: Long = 0
     var timeUpdated: Long = 0
 }

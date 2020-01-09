@@ -10,10 +10,10 @@ import com.example.photoapp.ui.base.ScopedViewModel
 
 class SearchCollectionViewModel : ScopedViewModel() {
 
-    private val sortByLiveData = MutableLiveData<String>()
+    private val queryLiveData = MutableLiveData<String>()
     private val collectionListResult: LiveData<RepositoryListResult<CollectionResponse>> =
-        Transformations.map(sortByLiveData) {
-            repository.getCollectionsList(scope)
+        Transformations.map(queryLiveData) {
+            repository.searchCollections(it, scope)
         }
 
     val collections: LiveData<PagedList<CollectionResponse>> =
@@ -23,7 +23,7 @@ class SearchCollectionViewModel : ScopedViewModel() {
     val networkErrors: LiveData<String> =
         Transformations.switchMap(collectionListResult) { it.networkErrors }
 
-    fun fetchCollections(sortBy: String = "latest") { //todo
-        sortByLiveData.postValue(sortBy)
+    fun fetchCollections(sortBy: String = "") {
+        queryLiveData.postValue(sortBy)
     }
 }

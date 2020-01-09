@@ -24,7 +24,7 @@ class UnsplashRepository : BaseRepository() {
             )
         val networkErrors = boundaryCallback.networkErrors
 
-        val dataSourceFactory = cache.getAllPhotos()
+        val dataSourceFactory = cache.getPhotos()
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()
@@ -59,15 +59,66 @@ class UnsplashRepository : BaseRepository() {
         collectionId: Int,
         scope: CoroutineScope
     ): RepositoryListResult<PhotoResponse> {
+        cache.clearPhotos(scope)
         val boundaryCallback =
             RepoBoundaryCallback(
                 scope,
                 { page, perPage -> apiService.getCollectionPhotos(collectionId, page, perPage) },
-                { photos, callback -> cache.insertCollectionPhotos(collectionId, photos, callback) }
+                { photos, callback ->
+                    cache.insertPhotos(
+                        photos,
+                        callback,
+                        collectionId.toString()
+                    )
+                }
             )
         val networkErrors = boundaryCallback.networkErrors
 
-        val dataSourceFactory = cache.getCollectionPhotos(collectionId)
+        val dataSourceFactory = cache.getPhotos(collectionId.toString())
+        val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
+            .setBoundaryCallback(boundaryCallback)
+            .build()
+
+        return RepositoryListResult(
+            data,
+            networkErrors
+        )
+    }
+
+    fun searchPhotos(query: String, scope: CoroutineScope): RepositoryListResult<PhotoResponse> {
+        cache.clearPhotos(scope)
+        val boundaryCallback =
+            RepoBoundaryCallback(
+                scope,
+                { page, perPage -> apiService.searchPhotos(query, page, perPage) },
+                { photos, callback -> cache.insertPhotos(photos, callback, query) }
+            )
+        val networkErrors = boundaryCallback.networkErrors
+
+        val dataSourceFactory = cache.getPhotos(query)
+        val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
+            .setBoundaryCallback(boundaryCallback)
+            .build()
+
+        return RepositoryListResult(
+            data,
+            networkErrors
+        )
+    }
+
+    fun searchCollections(
+        query: String,
+        scope: CoroutineScope
+    ): RepositoryListResult<CollectionResponse> {
+        val boundaryCallback =
+            RepoBoundaryCallback(
+                scope,
+                { page, perPage -> apiService.searchCollections(query, page, perPage) },
+                { collections, callback -> cache.insertCollections(collections, callback, query) }
+            )
+        val networkErrors = boundaryCallback.networkErrors
+
+        val dataSourceFactory = cache.getAllCollections()
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()

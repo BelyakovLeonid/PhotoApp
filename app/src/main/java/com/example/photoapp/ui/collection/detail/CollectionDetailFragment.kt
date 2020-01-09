@@ -1,10 +1,14 @@
 package com.example.photoapp.ui.collection.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.transition.Fade
+import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.CollectionResponse
@@ -18,9 +22,8 @@ import kotlinx.android.synthetic.main.fragment_collection_details.*
 class CollectionDetailFragment : BaseFragment() {
     lateinit var router: Router
     private lateinit var specialViewModel: CollectionDetailViewModel
+    private lateinit var currentCollection: CollectionResponse
     private val adapter = PhotoListAdapter(this::goToDetails)
-
-    var currentCollection: CollectionResponse? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +36,7 @@ class CollectionDetailFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         recycler_collection_details.adapter = adapter
         specialViewModel = ViewModelProviders.of(this).get(CollectionDetailViewModel::class.java)
-        currentCollection = commonViewModel.collectionSelected
+        currentCollection = commonViewModel.collectionSelected!!
         bindToolbar()
 
         specialViewModel.networkErrors.observe(this, Observer {
@@ -66,7 +69,7 @@ class CollectionDetailFragment : BaseFragment() {
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeAsUpIndicator(R.drawable.ic_back_black)
-                setTitle(currentCollection?.title)
+                title = currentCollection.title
             }
         }
 
@@ -78,6 +81,35 @@ class CollectionDetailFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         toolbar_collection_details.inflateMenu(R.menu.details_menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                router.navigateBack()
+            }
+            R.id.toolbar_browser -> {
+                openBrowser()
+            }
+            R.id.toolbar_share -> {
+                sharePhoto()
+            }
+        }
+        return true
+    }
+
+    private fun openBrowser() { //todo
+        val intent =
+            Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(currentCollection.links.html) }
+        startActivity(intent)
+    }
+
+    private fun sharePhoto() { //todo
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_TEXT, currentCollection.links.html)
+            type = "text/html"
+        }
+        startActivity(intent)
     }
 
     private fun updateData() {
@@ -100,8 +132,18 @@ class CollectionDetailFragment : BaseFragment() {
     private fun goToDetails(sharedElement: View, photoSelected: PhotoResponse) {
         commonViewModel.photoSelected = photoSelected
         commonViewModel.photoSelectedId = photoSelected.id
-        router.navigateWithSharedElement(
-            sharedElement,
-            PhotoDetailFragment().also { it.router = router })
+        val destinationFragment = PhotoDetailFragment().also {
+            it.router = router
+            it.postponeEnterTransition()
+
+            it.sharedElementEnterTransition = TransitionInflater
+                .from(context)
+                .inflateTransition(android.R.transition.move)
+                .setDuration(400)
+
+            exitTransition = Fade()
+        }
+
+        router.navigateWithSharedElement(sharedElement, destinationFragment)
     }
 }
