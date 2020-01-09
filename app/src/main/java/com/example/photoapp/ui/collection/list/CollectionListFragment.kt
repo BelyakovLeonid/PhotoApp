@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.CollectionResponse
-import com.example.photoapp.ui.adapters.CollectionListAdapter
+import com.example.photoapp.local.adapters.CollectionListAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
 import com.example.photoapp.ui.collection.detail.CollectionDetailFragment
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_recycler.*
 
 class CollectionListFragment : BaseFragment() {
     lateinit var specialViewModel: CollectionListViewModel
-    lateinit var listener: Router
+    lateinit var router: Router
     private val adapter = CollectionListAdapter(this::goToDetails)
 
     override fun onCreateView(
@@ -75,8 +75,8 @@ class CollectionListFragment : BaseFragment() {
     private fun goToDetails(collectionSelected: CollectionResponse) {
         commonViewModel.collectionSelected = collectionSelected
         commonViewModel.collectionSelectedId = collectionSelected.id
-        listener.navigateTo(CollectionDetailFragment().apply {
-            listener = this@CollectionListFragment.listener
-        })
+        val destinationFragment = CollectionDetailFragment().also { it.router = router }
+
+        router.navigateTo(destinationFragment)
     }
 }

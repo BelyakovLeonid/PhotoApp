@@ -92,5 +92,10 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.2.3'
     kapt 'androidx.room:room-compiler:2.2.3'
 
+    //PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    //may be in future
     implementation "com.github.bumptech.glide:recyclerview-integration:4.9.0"
+
 }

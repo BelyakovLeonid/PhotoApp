@@ -1,23 +1,26 @@
 package com.example.photoapp.ui.photo.detail
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
+import androidx.transition.TransitionInflater
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.data.network.response.PhotoDetailResponse
 import com.example.photoapp.data.network.response.PhotoLocation
+import com.example.photoapp.local.Glide.GlideApp
+import com.example.photoapp.local.Glide.load
 import com.example.photoapp.ui.base.BaseFragment
+import com.example.photoapp.ui.base.Router
 import kotlinx.android.synthetic.main.fragment_photo_details.*
 
 class PhotoDetailFragment : BaseFragment() {
-    lateinit var currentPhoto: PhotoResponse
-    lateinit var specialViewModel: PhotoDetailViewModel
+    lateinit var router: Router
+    private lateinit var currentPhoto: PhotoResponse
+    private lateinit var specialViewModel: PhotoDetailViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,16 +33,30 @@ class PhotoDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         specialViewModel = ViewModelProviders.of(this).get(PhotoDetailViewModel::class.java)
         currentPhoto = commonViewModel.photoSelected!!
+        ViewCompat.setTransitionName(details_image, "transitionName${currentPhoto.id}")
         bindToolbar()
+        bindPhoto()
         updateData()
 
         specialViewModel.photoDetailLiveData.observe(this, Observer {
             bindUI(it)
         })
+
+        details_image.setOnClickListener {
+            goToZoom()
+        }
     }
 
     private fun updateData() {
         specialViewModel.fetchSinglePhoto(commonViewModel.photoSelectedId!!)
+    }
+
+    private fun bindPhoto() {
+        details_image.load(
+            currentPhoto.urls.regular,
+            resources.displayMetrics,
+            Pair(currentPhoto.width, currentPhoto.height)
+        ) { startPostponedEnterTransition() }
     }
 
     private fun bindToolbar() {
@@ -60,11 +77,7 @@ class PhotoDetailFragment : BaseFragment() {
     }
 
     private fun bindUI(response: PhotoDetailResponse) {
-        Glide.with(view!!)
-            .load(response.urls.regular)
-            .placeholder(ColorDrawable(Color.parseColor(response.color)))
-            .into(details_image)
-        Glide.with(view!!).load(response.user.profileImage.small).into(details_profile)
+        GlideApp.with(view!!).load(response.user.profileImage.small).into(details_profile)
         details_profile_title.text = response.user.name
         details_likes_title.text = "${response.likes} Likes"
         details_downloads_title.text = "${response.downloads} Downloads"
@@ -89,5 +102,18 @@ class PhotoDetailFragment : BaseFragment() {
             details_date_title.visibility = View.GONE
             details_date.visibility = View.GONE
         }
+    }
+
+    private fun goToZoom() {
+        val zoomFragment = PhotoZoomFragment().also {
+            it.postponeEnterTransition()
+
+            it.sharedElementEnterTransition = TransitionInflater
+                .from(context)
+                .inflateTransition(android.R.transition.move)
+                .setDuration(400)
+        }
+
+        router.navigateWithSharedElement(details_image, zoomFragment)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.photoapp.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.photoapp.R
@@ -25,5 +26,12 @@ class MainActivity : AppCompatActivity(), Router {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_flow_fragment, destination)
             .commit()
+    }
+
+    override fun navigateWithSharedElement(
+        sharedView: View,
+        destination: Fragment
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

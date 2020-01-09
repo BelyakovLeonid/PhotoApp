@@ -1,4 +1,4 @@
-package com.example.photoapp.ui.photo.list
+package com.example.photoapp.ui.search.photo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,10 +17,9 @@ import com.example.photoapp.ui.base.Router
 import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
-
-class PhotoListFragment : BaseFragment() {
+class SearchPhotoFragment : BaseFragment() {
     lateinit var router: Router
-    private lateinit var specialViewModel: PhotoListViewModel
+    private lateinit var specialViewModel: SearchPhotosViewModel
     private val adapter = PhotoListAdapter(this::goToDetails)
 
     override fun onCreateView(
@@ -32,7 +31,7 @@ class PhotoListFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        specialViewModel = ViewModelProviders.of(this).get(PhotoListViewModel::class.java)
+        specialViewModel = ViewModelProviders.of(this).get(SearchPhotosViewModel::class.java)
         recycler_view.adapter = adapter
 
         specialViewModel.photos.observe(this, Observer {
@@ -46,6 +45,8 @@ class PhotoListFragment : BaseFragment() {
             showNetworkError(it.isNotEmpty())
         })
 
+        updateData()
+
         swipe_refresh_layout.setOnRefreshListener {
             updateData()
             swipe_refresh_layout.isRefreshing = false
@@ -54,8 +55,6 @@ class PhotoListFragment : BaseFragment() {
         placeholder_button.setOnClickListener {
             updateData()
         }
-
-        updateData()
     }
 
     private fun updateData() {
@@ -91,5 +90,4 @@ class PhotoListFragment : BaseFragment() {
         }
         router.navigateWithSharedElement(sharedElement, fragment)
     }
-
 }

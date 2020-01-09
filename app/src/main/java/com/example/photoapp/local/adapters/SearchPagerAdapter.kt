@@ -1,14 +1,14 @@
-package com.example.photoapp.ui.adapters
+package com.example.photoapp.local.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.photoapp.ui.base.Router
-import com.example.photoapp.ui.collection.list.CollectionListFragment
-import com.example.photoapp.ui.photo.list.PhotoListFragment
+import com.example.photoapp.ui.search.collection.SearchCollectionFragment
+import com.example.photoapp.ui.search.photo.SearchPhotoFragment
 
-class PagerAdapter(
+class SearchPagerAdapter(
     fm: FragmentManager,
     l: Lifecycle,
     val listener: Router
@@ -18,8 +18,8 @@ class PagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> PhotoListFragment().also { it.listener = listener }
-            else -> CollectionListFragment().also { it.listener = listener }
+            0 -> SearchPhotoFragment().also { it.router = listener }
+            else -> SearchCollectionFragment().also { it.router = listener }
         }
     }
 }

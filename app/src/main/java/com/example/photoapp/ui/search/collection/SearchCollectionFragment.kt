@@ -1,4 +1,4 @@
-package com.example.photoapp.ui.photo.list
+package com.example.photoapp.ui.search.collection
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,21 +7,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.transition.Fade
-import androidx.transition.TransitionInflater
 import com.example.photoapp.R
-import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.local.adapters.PhotoListAdapter
+import com.example.photoapp.data.db.entities.CollectionResponse
+import com.example.photoapp.local.adapters.CollectionListAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
-import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
+import com.example.photoapp.ui.collection.detail.CollectionDetailFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 
-class PhotoListFragment : BaseFragment() {
+class SearchCollectionFragment : BaseFragment() {
+    lateinit var specialViewModel: SearchCollectionViewModel
     lateinit var router: Router
-    private lateinit var specialViewModel: PhotoListViewModel
-    private val adapter = PhotoListAdapter(this::goToDetails)
+    private val adapter = CollectionListAdapter(this::goToDetails)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,18 +30,18 @@ class PhotoListFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        specialViewModel = ViewModelProviders.of(this).get(PhotoListViewModel::class.java)
         recycler_view.adapter = adapter
+        specialViewModel = ViewModelProviders.of(this).get(SearchCollectionViewModel::class.java)
 
-        specialViewModel.photos.observe(this, Observer {
+        specialViewModel.networkErrors.observe(this, Observer {
+            showNetworkError(it.isNotEmpty())
+        })
+
+        specialViewModel.collections.observe(this, Observer {
             adapter.submitList(it)
             progress_group.visibility = View.GONE
             placeholder_group.visibility = View.GONE
             swipe_refresh_layout.visibility = View.VISIBLE
-        })
-
-        specialViewModel.networkErrors.observe(this, Observer {
-            showNetworkError(it.isNotEmpty())
         })
 
         swipe_refresh_layout.setOnRefreshListener {
@@ -59,7 +57,7 @@ class PhotoListFragment : BaseFragment() {
     }
 
     private fun updateData() {
-        specialViewModel.fetchPhotos()
+        specialViewModel.fetchCollections()
     }
 
     private fun showNetworkError(isError: Boolean?) {
@@ -71,25 +69,15 @@ class PhotoListFragment : BaseFragment() {
             swipe_refresh_layout.visibility = View.GONE
         } else {
             placeholder_group.visibility = View.GONE
-            Toast.makeText(context, "Photos updated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Collections updated", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun goToDetails(sharedElement: View, photoSelected: PhotoResponse) {
-        commonViewModel.photoSelected = photoSelected
-        commonViewModel.photoSelectedId = photoSelected.id
-        val fragment = PhotoDetailFragment().also {
-            it.router = router
-            it.postponeEnterTransition()
+    private fun goToDetails(collectionSelected: CollectionResponse) {
+        commonViewModel.collectionSelected = collectionSelected
+        commonViewModel.collectionSelectedId = collectionSelected.id
+        val destinationFragment = CollectionDetailFragment().also { it.router = router }
 
-            it.sharedElementEnterTransition = TransitionInflater
-                .from(context)
-                .inflateTransition(android.R.transition.move)
-                .setDuration(400)
-
-            exitTransition = Fade()
-        }
-        router.navigateWithSharedElement(sharedElement, fragment)
+        router.navigateTo(destinationFragment)
     }
-
 }

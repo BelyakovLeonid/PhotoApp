@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.example.photoapp.R
 import com.example.photoapp.ui.base.BaseFragment
@@ -21,7 +22,7 @@ class FlowFragment : BaseFragment(), Router {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fr = PagerFragment()
-        fr.listener = this
+        fr.router = this
         childFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fr)
             .commit()
@@ -35,7 +36,22 @@ class FlowFragment : BaseFragment(), Router {
             .commit()
     }
 
+    override fun navigateWithSharedElement(
+        sharedView: View,
+        destination: Fragment
+    ) {
+        childFragmentManager
+            .beginTransaction()
+            .setReorderingAllowed(false)
+            .addSharedElement(sharedView, ViewCompat.getTransitionName(sharedView)!!)
+            .replace(R.id.fragment_container, destination)
+            .addToBackStack(null)
+            .commit()
+    }
+
     fun onBackPressed() {
-        childFragmentManager.popBackStackImmediate()
+        childFragmentManager
+            .popBackStack()
+
     }
 }

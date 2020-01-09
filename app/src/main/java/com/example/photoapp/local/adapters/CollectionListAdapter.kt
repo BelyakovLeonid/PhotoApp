@@ -1,4 +1,4 @@
-package com.example.photoapp.ui.adapters
+package com.example.photoapp.local.adapters
 
 import android.util.Log
 import android.view.LayoutInflater

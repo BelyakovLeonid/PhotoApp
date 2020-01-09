@@ -9,14 +9,14 @@ import com.bumptech.glide.Glide
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.ui.adapters.PhotoListAdapter
+import com.example.photoapp.local.adapters.PhotoListAdapter
 import com.example.photoapp.ui.base.BaseFragment
 import com.example.photoapp.ui.base.Router
 import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
 import kotlinx.android.synthetic.main.fragment_collection_details.*
 
 class CollectionDetailFragment : BaseFragment() {
-    lateinit var listener: Router
+    lateinit var router: Router
     private lateinit var specialViewModel: CollectionDetailViewModel
     private val adapter = PhotoListAdapter(this::goToDetails)
 
@@ -97,9 +97,11 @@ class CollectionDetailFragment : BaseFragment() {
 //        }
     }
 
-    private fun goToDetails(photoSelected: PhotoResponse) {
+    private fun goToDetails(sharedElement: View, photoSelected: PhotoResponse) {
         commonViewModel.photoSelected = photoSelected
         commonViewModel.photoSelectedId = photoSelected.id
-        listener.navigateTo(PhotoDetailFragment())
+        router.navigateWithSharedElement(
+            sharedElement,
+            PhotoDetailFragment().also { it.router = router })
     }
 }

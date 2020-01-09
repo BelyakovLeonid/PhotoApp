@@ -1,20 +1,20 @@
-package com.example.photoapp.ui.adapters
+package com.example.photoapp.local.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.local.Glide.GlideApp
+import com.example.photoapp.local.Glide.load
 
 class PhotoListAdapter(
-    private val onClick: (PhotoResponse) -> Unit
+    private val onClick: (View, PhotoResponse) -> Unit
 ) : PagedListAdapter<PhotoResponse, PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -46,16 +46,18 @@ class PhotoListAdapter(
 class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val photoView = itemView.findViewById<ImageView>(R.id.photo_view)
 
-    fun bind(photoItem: PhotoResponse, onClick: (PhotoResponse) -> Unit) {
+    fun bind(photoItem: PhotoResponse, onClick: (View, PhotoResponse) -> Unit) {
+        ViewCompat.setTransitionName(photoView, "transitionName${photoItem.id}")
 
-        GlideApp.with(itemView)
-            .load(photoItem.urls.regular)
-            .placeholder(R.color.colorLight)
-            .transition(DrawableTransitionOptions.withCrossFade(500))
-            .into(photoView)
+        photoView.load(
+            photoItem.urls.regular,
+            itemView.context.resources.displayMetrics,
+            Pair(photoItem.width, photoItem.height),
+            true
+        )
 
         photoView.setOnClickListener {
-            onClick.invoke(photoItem)
+            onClick.invoke(photoView, photoItem)
         }
     }
 
