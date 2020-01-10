@@ -6,19 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.local.adapters.CollectionListAdapter
-import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
+import com.example.photoapp.ui.base.BaseSearchFragment
 import com.example.photoapp.ui.collection.detail.CollectionDetailFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 
-class SearchCollectionFragment : BaseFragment() {
-    lateinit var specialViewModel: SearchCollectionViewModel
-    lateinit var router: Router
+class SearchCollectionFragment : BaseSearchFragment() {
     private val adapter = CollectionListAdapter(this::goToDetails)
 
     override fun onCreateView(
@@ -31,13 +27,12 @@ class SearchCollectionFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         recycler_view.adapter = adapter
-        specialViewModel = ViewModelProviders.of(this).get(SearchCollectionViewModel::class.java)
 
-        specialViewModel.networkErrors.observe(this, Observer {
+        commonSearchViewModel.networkCollectionsErrors.observe(this, Observer {
             showNetworkError(it.isNotEmpty())
         })
 
-        specialViewModel.collections.observe(this, Observer {
+        commonSearchViewModel.collections.observe(this, Observer {
             adapter.submitList(it)
             progress_group.visibility = View.GONE
             placeholder_group.visibility = View.GONE
@@ -52,12 +47,10 @@ class SearchCollectionFragment : BaseFragment() {
         placeholder_button.setOnClickListener {
             updateData()
         }
-
-        updateData()
     }
 
     private fun updateData() {
-        specialViewModel.fetchCollections()
+//        commonSearchViewModel.fetchCollections()
     }
 
     private fun showNetworkError(isError: Boolean?) {

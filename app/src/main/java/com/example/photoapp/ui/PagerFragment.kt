@@ -6,18 +6,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.GravityCompat
+import androidx.transition.Fade
 import androidx.transition.Slide
 import androidx.viewpager2.widget.ViewPager2
 import com.example.photoapp.R
 import com.example.photoapp.local.adapters.PagerAdapter
 import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_pager.*
 
 class PagerFragment : BaseFragment() {
-
-    lateinit var router: Router
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -127,7 +125,9 @@ class PagerFragment : BaseFragment() {
     private fun goToSearch() {
         val destinationFragment = SearchFragment().also {
             it.router = router
-            it.enterTransition = Slide(Gravity.END).setDuration(300)
+
+            it.enterTransition = Slide(Gravity.END).setDuration(1000)
+            exitTransition = Fade().setDuration(1000)
         }
         router.navigateTo(destinationFragment)
     }

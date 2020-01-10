@@ -1,10 +1,9 @@
 package com.example.photoapp.ui.photo.detail
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,13 +14,10 @@ import com.example.photoapp.data.network.response.PhotoDetailResponse
 import com.example.photoapp.data.network.response.PhotoLocation
 import com.example.photoapp.local.Glide.GlideApp
 import com.example.photoapp.local.Glide.load
-import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
+import com.example.photoapp.ui.base.BaseDetailedFragment
 import kotlinx.android.synthetic.main.fragment_photo_details.*
 
-class PhotoDetailFragment : BaseFragment() {
-    lateinit var router: Router
-    private lateinit var currentPhoto: PhotoResponse
+class PhotoDetailFragment : BaseDetailedFragment() {
     private lateinit var specialViewModel: PhotoDetailViewModel
 
     override fun onCreateView(
@@ -34,10 +30,9 @@ class PhotoDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         specialViewModel = ViewModelProviders.of(this).get(PhotoDetailViewModel::class.java)
-        currentPhoto = commonViewModel.photoSelected!!
-        ViewCompat.setTransitionName(details_image, "transitionName${currentPhoto.id}")
+        currentItem = commonViewModel.photoSelected!!
+        bindPhoto(currentItem as PhotoResponse)
         bindToolbar()
-        bindPhoto()
         updateData()
 
         specialViewModel.photoDetailLiveData.observe(this, Observer {
@@ -53,67 +48,27 @@ class PhotoDetailFragment : BaseFragment() {
         specialViewModel.fetchSinglePhoto(commonViewModel.photoSelectedId!!)
     }
 
-    private fun bindPhoto() {
+    private fun bindPhoto(photo: PhotoResponse) {
+        ViewCompat.setTransitionName(
+            details_image,
+            "transitionName${photo.id}"
+        )
+
         details_image.load(
-            currentPhoto.urls.regular,
+            photo.urls.regular,
             resources.displayMetrics,
-            Pair(currentPhoto.width, currentPhoto.height)
+            Pair(photo.width, photo.height)
         ) { startPostponedEnterTransition() }
     }
 
-    private fun bindToolbar() {
-        (activity as AppCompatActivity).apply {
-            setSupportActionBar(toolbar_photo_details)
-
-            supportActionBar?.apply {
-                setDisplayHomeAsUpEnabled(true)
-                setHomeAsUpIndicator(R.drawable.ic_back_black)
-                setTitle("")
-            }
-        }
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        toolbar_photo_details.inflateMenu(R.menu.details_menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                router.navigateBack()
-            }
-            R.id.toolbar_browser -> {
-                openBrowser()
-            }
-            R.id.toolbar_share -> {
-                sharePhoto()
-            }
-        }
-        return true
-    }
-
-    private fun openBrowser() { //todo проверку
-        val intent = Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(currentPhoto.links.html) }
-        startActivity(intent)
-    }
-
-    private fun sharePhoto() {  //todo проверку
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            putExtra(Intent.EXTRA_TEXT, currentPhoto.links.html)
-            type = "text/html"
-        }
-        startActivity(intent)
-    }
-
-    private fun bindUI(response: PhotoDetailResponse) {
-        GlideApp.with(view!!).load(response.user.profileImage.small).into(details_profile)
-        details_profile_title.text = response.user.name
-        details_likes_title.text = "${response.likes} Likes"
-        details_downloads_title.text = "${response.downloads} Downloads"
-        details_color_title.text = response.color
-        bindLocation(response.location)
-        bindDate(response.createdAt)
+    private fun bindUI(photo: PhotoDetailResponse) {
+        GlideApp.with(view!!).load(photo.user.profileImage.small).into(details_profile)
+        details_profile_title.text = photo.user.name
+        details_likes_title.text = "${photo.likes} Likes"
+        details_downloads_title.text = "${photo.downloads} Downloads"
+        details_color_title.text = photo.color
+        bindLocation(photo.location)
+        bindDate(photo.createdAt)
     }
 
     private fun bindLocation(location: PhotoLocation?) {
@@ -146,4 +101,6 @@ class PhotoDetailFragment : BaseFragment() {
 
         router.navigateWithSharedElement(details_image, zoomFragment)
     }
+
+    override fun getFragmentTitle() = ""
 }

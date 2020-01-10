@@ -13,13 +13,11 @@ import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.local.adapters.PhotoListAdapter
 import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
 import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 
 class PhotoListFragment : BaseFragment() {
-    lateinit var router: Router
     private lateinit var specialViewModel: PhotoListViewModel
     private val adapter = PhotoListAdapter(this::goToDetails)
 

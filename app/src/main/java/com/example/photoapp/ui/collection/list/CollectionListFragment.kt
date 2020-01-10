@@ -1,23 +1,23 @@
 package com.example.photoapp.ui.collection.list
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.transition.Slide
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.local.adapters.CollectionListAdapter
 import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
 import com.example.photoapp.ui.collection.detail.CollectionDetailFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 class CollectionListFragment : BaseFragment() {
     lateinit var specialViewModel: CollectionListViewModel
-    lateinit var router: Router
     private val adapter = CollectionListAdapter(this::goToDetails)
 
     override fun onCreateView(
@@ -75,7 +75,10 @@ class CollectionListFragment : BaseFragment() {
     private fun goToDetails(collectionSelected: CollectionResponse) {
         commonViewModel.collectionSelected = collectionSelected
         commonViewModel.collectionSelectedId = collectionSelected.id
-        val destinationFragment = CollectionDetailFragment().also { it.router = router }
+        val destinationFragment = CollectionDetailFragment().also {
+            it.router = router
+            it.enterTransition = Slide(Gravity.END).setDuration(300)
+        }
 
         router.navigateTo(destinationFragment)
     }

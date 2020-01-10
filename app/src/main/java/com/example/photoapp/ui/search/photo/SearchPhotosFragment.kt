@@ -5,21 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.transition.Fade
 import androidx.transition.TransitionInflater
 import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.local.adapters.PhotoListAdapter
-import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
+import com.example.photoapp.ui.base.BaseSearchFragment
 import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
-class SearchPhotoFragment : BaseFragment() {
-    lateinit var router: Router
-    private lateinit var specialViewModel: SearchPhotosViewModel
+class SearchPhotoFragment : BaseSearchFragment() {
+
     private val adapter = PhotoListAdapter(this::goToDetails)
 
     override fun onCreateView(
@@ -31,17 +29,16 @@ class SearchPhotoFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        specialViewModel = ViewModelProviders.of(this).get(SearchPhotosViewModel::class.java)
         recycler_view.adapter = adapter
 
-        specialViewModel.photos.observe(this, Observer {
+        commonSearchViewModel.photos.observe(this, Observer {
             adapter.submitList(it)
             progress_group.visibility = View.GONE
             placeholder_group.visibility = View.GONE
             swipe_refresh_layout.visibility = View.VISIBLE
         })
 
-        specialViewModel.networkErrors.observe(this, Observer {
+        commonSearchViewModel.networkPhotosErrors.observe(this, Observer {
             showNetworkError(it.isNotEmpty())
         })
 
@@ -55,10 +52,12 @@ class SearchPhotoFragment : BaseFragment() {
         placeholder_button.setOnClickListener {
             updateData()
         }
+
+        (activity as AppCompatActivity).supportActionBar
     }
 
     private fun updateData() {
-        specialViewModel.fetchPhotos()
+//        commonSearchViewModel.fetchPhotos()
     }
 
     private fun showNetworkError(isError: Boolean?) {

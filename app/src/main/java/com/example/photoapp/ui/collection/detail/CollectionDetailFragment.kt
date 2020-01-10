@@ -1,10 +1,9 @@
 package com.example.photoapp.ui.collection.detail
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.transition.Fade
@@ -14,15 +13,12 @@ import com.example.photoapp.R
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.local.adapters.PhotoListAdapter
-import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
+import com.example.photoapp.ui.base.BaseDetailedFragment
 import com.example.photoapp.ui.photo.detail.PhotoDetailFragment
 import kotlinx.android.synthetic.main.fragment_collection_details.*
 
-class CollectionDetailFragment : BaseFragment() {
-    lateinit var router: Router
+class CollectionDetailFragment : BaseDetailedFragment() {
     private lateinit var specialViewModel: CollectionDetailViewModel
-    private lateinit var currentCollection: CollectionResponse
     private val adapter = PhotoListAdapter(this::goToDetails)
 
     override fun onCreateView(
@@ -36,7 +32,7 @@ class CollectionDetailFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         recycler_collection_details.adapter = adapter
         specialViewModel = ViewModelProviders.of(this).get(CollectionDetailViewModel::class.java)
-        currentCollection = commonViewModel.collectionSelected!!
+        currentItem = commonViewModel.collectionSelected!!
         bindToolbar()
 
         specialViewModel.networkErrors.observe(this, Observer {
@@ -45,6 +41,7 @@ class CollectionDetailFragment : BaseFragment() {
 
         specialViewModel.photos.observe(this, Observer {
             adapter.submitList(it)
+
 //            progress_group.visibility = View.GONE
 //            placeholder_group.visibility = View.GONE
 //            swipe_refresh_layout.visibility = View.VISIBLE
@@ -60,56 +57,6 @@ class CollectionDetailFragment : BaseFragment() {
 //        }
 
         updateData()
-    }
-
-    private fun bindToolbar() {
-        (activity as AppCompatActivity).apply {
-            setSupportActionBar(toolbar_collection_details)
-
-            supportActionBar?.apply {
-                setDisplayHomeAsUpEnabled(true)
-                setHomeAsUpIndicator(R.drawable.ic_back_black)
-                title = currentCollection.title
-            }
-        }
-
-        setHasOptionsMenu(true)
-        Glide.with(view!!).load(currentCollection?.user?.profileImage?.medium).into(collection_icon)
-        collection_description.text = currentCollection?.description
-        collection_name.text = "By ${currentCollection?.user?.name}"
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        toolbar_collection_details.inflateMenu(R.menu.details_menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                router.navigateBack()
-            }
-            R.id.toolbar_browser -> {
-                openBrowser()
-            }
-            R.id.toolbar_share -> {
-                sharePhoto()
-            }
-        }
-        return true
-    }
-
-    private fun openBrowser() { //todo
-        val intent =
-            Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(currentCollection.links.html) }
-        startActivity(intent)
-    }
-
-    private fun sharePhoto() { //todo
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            putExtra(Intent.EXTRA_TEXT, currentCollection.links.html)
-            type = "text/html"
-        }
-        startActivity(intent)
     }
 
     private fun updateData() {
@@ -146,4 +93,14 @@ class CollectionDetailFragment : BaseFragment() {
 
         router.navigateWithSharedElement(sharedElement, destinationFragment)
     }
+
+    override fun bindToolbar() {
+        super.bindToolbar()
+        val collection = currentItem as CollectionResponse
+        Glide.with(view!!).load(collection.user.profileImage.medium).into(collection_icon)
+        collection_description.text = collection.description
+        collection_name.text = "By ${collection.user.name}"
+    }
+
+    override fun getFragmentTitle() = (currentItem as CollectionResponse).title
 }

@@ -3,6 +3,7 @@ package com.example.photoapp.data.db.entities
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.photoapp.data.db.entities.base.BaseResponse
 import com.example.photoapp.data.network.response.Links
 import com.example.photoapp.data.network.response.Urls
 import com.google.gson.annotations.SerializedName
@@ -21,13 +22,5 @@ data class PhotoResponse(
     @Embedded(prefix = "urls_")
     val urls: Urls,
     @Embedded(prefix = "links_")
-    val links: Links
-) {
-    var tag: String = DEFAULT_TAG
-    var timeCreated: Long = 0
-    var timeUpdated: Long = 0
-
-    companion object {
-        const val DEFAULT_TAG = "My_Default_DB_Tag"
-    }
-}
+    override val links: Links
+) : BaseResponse()

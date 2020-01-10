@@ -41,6 +41,7 @@ interface UnsplashApiService {
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
     ): Response<List<PhotoResponse>>
+//            Response<SearchResponse<PhotoResponse>>
 
     @GET("collections")
     suspend fun getListCollections(
@@ -54,6 +55,7 @@ interface UnsplashApiService {
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
     ): Response<List<CollectionResponse>>
+//            Response<SearchResponse<CollectionResponse>>
 
     @GET("collections/{id}/photos")
     suspend fun getCollectionPhotos(

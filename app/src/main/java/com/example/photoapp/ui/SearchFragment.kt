@@ -3,15 +3,14 @@ package com.example.photoapp.ui
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import com.example.photoapp.R
-import com.example.photoapp.local.adapters.PagerAdapter
-import com.example.photoapp.ui.base.BaseFragment
-import com.example.photoapp.ui.base.Router
+import com.example.photoapp.local.adapters.PagerSearchAdapter
+import com.example.photoapp.ui.base.BaseSearchFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_pager.*
 
-class SearchFragment : BaseFragment() {
-    lateinit var router: Router
+class SearchFragment : BaseSearchFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,8 +21,7 @@ class SearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewPager.adapter = PagerAdapter(childFragmentManager, lifecycle, router)
+        viewPager.adapter = PagerSearchAdapter(childFragmentManager, lifecycle, router)
 
         TabLayoutMediator(
             tabLayout,
@@ -53,7 +51,19 @@ class SearchFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         toolbar.inflateMenu(R.menu.search_menu)
-        menu.findItem(R.id.menu_search).actionView.requestFocus()
+        menu.findItem(R.id.menu_search).actionView.apply {
+            requestFocus()
+            (this as SearchView).setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    commonSearchViewModel.executeQuery(query)
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return true
+                }
+            })
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

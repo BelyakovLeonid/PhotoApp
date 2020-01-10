@@ -4,7 +4,7 @@ import androidx.paging.DataSource
 import com.example.photoapp.PhotoApp
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
-import com.example.photoapp.data.db.entities.PhotoResponse.Companion.DEFAULT_TAG
+import com.example.photoapp.data.db.entities.base.BaseResponse.Companion.DEFAULT_TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -26,7 +26,7 @@ class PhotosCache {
         insertFinished()
     }
 
-    fun getAllCollections(tag: String = DEFAULT_TAG): DataSource.Factory<Int, CollectionResponse> {
+    fun getCollections(tag: String = DEFAULT_TAG): DataSource.Factory<Int, CollectionResponse> {
         return collectionDao.getAllCollections(tag)
     }
 

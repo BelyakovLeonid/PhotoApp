@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.photoapp.ui.CommonViewModel
 
 abstract class BaseFragment : Fragment() {
-
+    lateinit var router: Router
     lateinit var commonViewModel: CommonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

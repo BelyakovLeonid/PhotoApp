@@ -29,10 +29,7 @@ class UnsplashRepository : BaseRepository() {
             .setBoundaryCallback(boundaryCallback)
             .build()
 
-        return RepositoryListResult(
-            data,
-            networkErrors
-        )
+        return RepositoryListResult(data, networkErrors)
     }
 
     fun getCollectionsList(scope: CoroutineScope): RepositoryListResult<CollectionResponse> {
@@ -44,22 +41,18 @@ class UnsplashRepository : BaseRepository() {
             )
         val networkErrors = boundaryCallback.networkErrors
 
-        val dataSourceFactory = cache.getAllCollections()
+        val dataSourceFactory = cache.getCollections()
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()
 
-        return RepositoryListResult(
-            data,
-            networkErrors
-        )
+        return RepositoryListResult(data, networkErrors)
     }
 
     fun getCollectionPhotos(
         collectionId: Int,
         scope: CoroutineScope
     ): RepositoryListResult<PhotoResponse> {
-        cache.clearPhotos(scope)
         val boundaryCallback =
             RepoBoundaryCallback(
                 scope,
@@ -79,14 +72,10 @@ class UnsplashRepository : BaseRepository() {
             .setBoundaryCallback(boundaryCallback)
             .build()
 
-        return RepositoryListResult(
-            data,
-            networkErrors
-        )
+        return RepositoryListResult(data, networkErrors)
     }
 
     fun searchPhotos(query: String, scope: CoroutineScope): RepositoryListResult<PhotoResponse> {
-        cache.clearPhotos(scope)
         val boundaryCallback =
             RepoBoundaryCallback(
                 scope,
@@ -100,10 +89,7 @@ class UnsplashRepository : BaseRepository() {
             .setBoundaryCallback(boundaryCallback)
             .build()
 
-        return RepositoryListResult(
-            data,
-            networkErrors
-        )
+        return RepositoryListResult(data, networkErrors)
     }
 
     fun searchCollections(
@@ -118,15 +104,12 @@ class UnsplashRepository : BaseRepository() {
             )
         val networkErrors = boundaryCallback.networkErrors
 
-        val dataSourceFactory = cache.getAllCollections()
+        val dataSourceFactory = cache.getCollections(query)
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()
 
-        return RepositoryListResult(
-            data,
-            networkErrors
-        )
+        return RepositoryListResult(data, networkErrors)
     }
 
     suspend fun getPhoto(id: String): NetworkResult<PhotoDetailResponse> = safeApiCall(
