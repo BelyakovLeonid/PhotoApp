@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.preference.PreferenceCategory android:title="General">
+
+        <androidx.preference.ListPreference
+            android:key="PREF_LANGUAGE"
+            android:title="Language"
+            android:defaultValue="English"
+            android:entries="@array/LanguageEntries"
+            android:entryValues="@array/LanguageEntries" />
+
+        <androidx.preference.ListPreference
+            android:key="PREF_THEME"
+            android:title="Theme"
+            android:defaultValue="Light"
+            android:entries="@array/ThemeEntries"
+            android:entryValues="@array/ThemeEntries" />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="Quality">
+
+        <androidx.preference.ListPreference
+            android:key="PREF_LOAD_QUALITY"
+            android:title="Language"
+            android:defaultValue="Regular"
+            android:entries="@array/QualityEntries"
+            android:entryValues="@array/QualityEntries" />
+
+        <androidx.preference.ListPreference
+            android:key="PREF_DOWNLOAD_QUALITY"
+            android:title="Theme"
+            android:defaultValue="Full"
+            android:entries="@array/QualityEntries"
+            android:entryValues="@array/QualityEntries" />
+
+        <androidx.preference.ListPreference
+            android:key="PREF_WALLPAPER_QUALITY"
+            android:title="Theme"
+            android:defaultValue="Full"
+            android:entries="@array/QualityEntries"
+            android:entryValues="@array/QualityEntries" />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="Layout">
+
+        <androidx.preference.ListPreference
+            android:key="PREF_LAYOUT"
+            android:title="Layout"
+            android:defaultValue="List"
+            android:entries="@array/LayoutEntries"
+            android:entryValues="@array/LayoutEntries" />
+
+    </androidx.preference.PreferenceCategory>
+
+    <androidx.preference.PreferenceCategory android:title="Other">
+
+        <Preference
+            android:title="Go to Unsplash.com"
+            android:key="PREF_GO_TO_UNSPLASH" />
+
+    </androidx.preference.PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

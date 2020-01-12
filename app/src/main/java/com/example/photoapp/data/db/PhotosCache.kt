@@ -1,18 +1,18 @@
 package com.example.photoapp.data.db
 
 import androidx.paging.DataSource
-import com.example.photoapp.PhotoApp
+import com.example.photoapp.data.db.daos.CollectionDao
+import com.example.photoapp.data.db.daos.PhotoDao
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.data.db.entities.base.BaseResponse.Companion.DEFAULT_TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class PhotosCache {
-
-    private val photoDao = PhotoApp.unsplashDataBase.photoDao()
-    private val collectionDao = PhotoApp.unsplashDataBase.collectionDao()
-
+class PhotosCache(
+    private val photoDao: PhotoDao,
+    private val collectionDao: CollectionDao
+) {
     fun clearPhotos(scope: CoroutineScope) = scope.launch {
         photoDao.clearPhotos()
     }

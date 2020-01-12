@@ -3,6 +3,7 @@ package com.example.photoapp.data.network
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.data.network.response.PhotoDetailResponse
+import com.example.photoapp.data.network.response.SearchResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -23,10 +24,8 @@ const val API_KEY = "cd1180255d7afef679adfe772daaa04b449166b9c5150b40f266e996789
 
 interface UnsplashApiService {
 
-    @GET("photos/{id}")
-    suspend fun getPhotoById(
-        @Path("id") photoId: String
-    ): Response<PhotoDetailResponse>
+    @GET("photos/random")
+    suspend fun getRandomPhoto(): Response<PhotoDetailResponse>
 
     @GET("photos")
     suspend fun getListPhotos(
@@ -35,13 +34,17 @@ interface UnsplashApiService {
         @Query("order_by") order_by: String
     ): Response<List<PhotoResponse>>
 
+    @GET("photos/{id}")
+    suspend fun getPhotoById(
+        @Path("id") photoId: String
+    ): Response<PhotoDetailResponse>
+
     @GET("search/photos")
     suspend fun searchPhotos(
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
-    ): Response<List<PhotoResponse>>
-//            Response<SearchResponse<PhotoResponse>>
+    ): Response<SearchResponse<PhotoResponse>>
 
     @GET("collections")
     suspend fun getListCollections(
@@ -54,8 +57,7 @@ interface UnsplashApiService {
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
-    ): Response<List<CollectionResponse>>
-//            Response<SearchResponse<CollectionResponse>>
+    ): Response<SearchResponse<CollectionResponse>>
 
     @GET("collections/{id}/photos")
     suspend fun getCollectionPhotos(

@@ -40,7 +40,7 @@
             app:showAsAction="ifRoom" />
 
         <item
-            android:id="@+id/drawer_info"
+            android:id="@+id/drawer_about"
             android:icon="@drawable/ic_info_black"
             android:title="About"
             app:showAsAction="ifRoom" />

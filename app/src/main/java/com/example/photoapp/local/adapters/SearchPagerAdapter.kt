@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.photoapp.ui.base.Router
-import com.example.photoapp.ui.search.collection.SearchCollectionFragment
-import com.example.photoapp.ui.search.photo.SearchPhotoFragment
+import com.example.photoapp.ui.Router
+import com.example.photoapp.ui.fragments.collection.search.SearchCollectionFragment
+import com.example.photoapp.ui.fragments.photo.search.SearchPhotoFragment
 
 class SearchPagerAdapter(
     fm: FragmentManager,

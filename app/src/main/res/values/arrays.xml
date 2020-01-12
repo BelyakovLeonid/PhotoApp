@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="LanguageEntries">
+        <item>English</item>
+        <item>Russian</item>
+        <item>German</item>
+        <item>Chinese</item>
+    </string-array>
+
+    <string-array name="ThemeEntries">
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+
+    <string-array name="QualityEntries">
+        <item>Raw</item>
+        <item>Full</item>
+        <item>Regular</item>
+        <item>Small</item>
+        <item>Thumb</item>
+    </string-array>
+
+    <string-array name="LayoutEntries">
+        <item>List</item>
+        <item>Grid</item>
+        <item>Cards</item>
+    </string-array>
+
+</resources>

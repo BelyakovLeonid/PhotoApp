@@ -1,19 +1,19 @@
 package com.example.photoapp.data.repository
 
 import androidx.paging.LivePagedListBuilder
-import com.example.photoapp.PhotoApp
 import com.example.photoapp.data.db.PhotosCache
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
+import com.example.photoapp.data.network.UnsplashApiService
 import com.example.photoapp.data.network.response.PhotoDetailResponse
 import com.example.photoapp.local.NetworkResult
 import com.example.photoapp.local.RepositoryListResult
 import kotlinx.coroutines.CoroutineScope
 
-class UnsplashRepository : BaseRepository() {
-
-    private val apiService = PhotoApp.unsplashApiService
-    private val cache = PhotosCache()
+class UnsplashRepository(
+    private val apiService: UnsplashApiService,
+    private val cache: PhotosCache
+) : BaseRepository() {
 
     fun getPhotosList(sortBy: String, scope: CoroutineScope): RepositoryListResult<PhotoResponse> {
         val boundaryCallback =
@@ -32,7 +32,10 @@ class UnsplashRepository : BaseRepository() {
         return RepositoryListResult(data, networkErrors)
     }
 
-    fun getCollectionsList(scope: CoroutineScope): RepositoryListResult<CollectionResponse> {
+    fun getCollectionsList(
+        sortBy: String,
+        scope: CoroutineScope
+    ): RepositoryListResult<CollectionResponse> {
         val boundaryCallback =
             RepoBoundaryCallback(
                 scope,
@@ -50,24 +53,30 @@ class UnsplashRepository : BaseRepository() {
     }
 
     fun getCollectionPhotos(
-        collectionId: Int,
+        collectionId: String,
         scope: CoroutineScope
     ): RepositoryListResult<PhotoResponse> {
-        val boundaryCallback =
-            RepoBoundaryCallback(
-                scope,
-                { page, perPage -> apiService.getCollectionPhotos(collectionId, page, perPage) },
-                { photos, callback ->
-                    cache.insertPhotos(
-                        photos,
-                        callback,
-                        collectionId.toString()
-                    )
-                }
-            )
+        val boundaryCallback = RepoBoundaryCallback(
+            scope,
+            { page, perPage ->
+                apiService.getCollectionPhotos(
+                    Integer.parseInt(collectionId),
+                    page,
+                    perPage
+                )
+            },
+
+            { photos, callback ->
+                cache.insertPhotos(
+                    photos,
+                    callback,
+                    collectionId
+                )
+            }
+        )
         val networkErrors = boundaryCallback.networkErrors
 
-        val dataSourceFactory = cache.getPhotos(collectionId.toString())
+        val dataSourceFactory = cache.getPhotos(collectionId)
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()
@@ -77,7 +86,7 @@ class UnsplashRepository : BaseRepository() {
 
     fun searchPhotos(query: String, scope: CoroutineScope): RepositoryListResult<PhotoResponse> {
         val boundaryCallback =
-            RepoBoundaryCallback(
+            RepoSearchBoundaryCallback(
                 scope,
                 { page, perPage -> apiService.searchPhotos(query, page, perPage) },
                 { photos, callback -> cache.insertPhotos(photos, callback, query) }
@@ -97,7 +106,7 @@ class UnsplashRepository : BaseRepository() {
         scope: CoroutineScope
     ): RepositoryListResult<CollectionResponse> {
         val boundaryCallback =
-            RepoBoundaryCallback(
+            RepoSearchBoundaryCallback(
                 scope,
                 { page, perPage -> apiService.searchCollections(query, page, perPage) },
                 { collections, callback -> cache.insertCollections(collections, callback, query) }
@@ -114,6 +123,11 @@ class UnsplashRepository : BaseRepository() {
 
     suspend fun getPhoto(id: String): NetworkResult<PhotoDetailResponse> = safeApiCall(
         call = { apiService.getPhotoById(id) },
+        errorMessage = "Error fetching photo"
+    )
+
+    suspend fun getRandomPhoto(dummy: String): NetworkResult<PhotoDetailResponse> = safeApiCall(
+        call = { apiService.getRandomPhoto() },
         errorMessage = "Error fetching photo"
     )
 

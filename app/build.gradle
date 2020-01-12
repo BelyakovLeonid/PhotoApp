@@ -50,6 +50,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     //Pagination
     implementation 'androidx.paging:paging-runtime:2.1.1'
@@ -72,16 +73,9 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'de.hdodenhof:circleimageview:3.0.1'
 
-    // Navigation
-    implementation "android.arch.navigation:navigation-fragment:$navigation_version"
-    implementation "android.arch.navigation:navigation-ui:$navigation_version"
-    implementation "android.arch.navigation:navigation-fragment-ktx:$navigation_version"
-    implementation "android.arch.navigation:navigation-ui-ktx:$navigation_version"
-
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     // Kodein
     implementation "org.kodein.di:kodein-di-generic-jvm:5.2.0"
@@ -94,8 +88,8 @@ dependencies {
 
     //PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    //may be in future
-    implementation "com.github.bumptech.glide:recyclerview-integration:4.9.0"
-
+    //Preferences
+    implementation "androidx.preference:preference:1.1.0"
 }

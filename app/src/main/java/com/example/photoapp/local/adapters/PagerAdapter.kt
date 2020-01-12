@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.photoapp.ui.base.Router
-import com.example.photoapp.ui.collection.list.CollectionListFragment
-import com.example.photoapp.ui.photo.list.PhotoListFragment
+import com.example.photoapp.ui.Router
+import com.example.photoapp.ui.fragments.collection.list.CollectionListFragment
+import com.example.photoapp.ui.fragments.photo.list.PhotoListFragment
 
 class PagerAdapter(
     fm: FragmentManager,
