@@ -28,43 +28,43 @@ class PhotoInfoDialogFragment : DialogFragment() {
         val exif = currentPhoto.exif
 
         view.findViewById<TextView>(R.id.info_dimensions_text).text =
-            "Dimensions: ${currentPhoto.width} x ${currentPhoto.height}"
+            resources.getString(R.string.info_dimensions, currentPhoto.width, currentPhoto.height)
 
         view.findViewById<TextView>(R.id.info_make_text).text = if (exif?.make == null) {
-            "Make: ---"
+            resources.getString(R.string.info_make_empty)
         } else {
-            "Make: ${exif.make}"
+            resources.getString(R.string.info_make, exif.make)
         }
 
         view.findViewById<TextView>(R.id.info_camera_text).text = if (exif?.model == null) {
-            "Model: ---"
+            resources.getString(R.string.info_model_empty)
         } else {
-            "Model: ${exif.model}"
+            resources.getString(R.string.info_model, exif.model)
         }
 
         view.findViewById<TextView>(R.id.info_exposure_text).text =
             if (exif?.exposureTime == null) {
-                "Exposure: ---"
+                resources.getString(R.string.info_exposure_empty)
             } else {
-                "Exposure: ${exif.exposureTime}"
+                resources.getString(R.string.info_exposure, exif.exposureTime)
             }
 
         view.findViewById<TextView>(R.id.info_aperture_text).text = if (exif?.aperture == null) {
-            "Aperture: ---"
+            resources.getString(R.string.info_aperture_empty)
         } else {
-            "Aperture: ${exif.aperture}"
+            resources.getString(R.string.info_aperture, exif.aperture)
         }
 
         view.findViewById<TextView>(R.id.info_iso_text).text = if (exif?.iso == null) {
-            "Iso: ---"
+            resources.getString(R.string.info_iso_empty)
         } else {
-            "Iso: ${exif.aperture}"
+            resources.getString(R.string.info_iso, exif.iso)
         }
 
         view.findViewById<TextView>(R.id.info_focal_text).text = if (exif?.focalLength == null) {
-            "Focal length: ---"
+            resources.getString(R.string.info_focal_empty)
         } else {
-            "Focal length: ${exif.focalLength}"
+            resources.getString(R.string.info_focal, exif.focalLength)
         }
     }
 

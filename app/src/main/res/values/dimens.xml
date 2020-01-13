@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_indent">16dp</dimen>
+    <dimen name="card_view_margin">10dp</dimen>
+    <dimen name="card_view_cr">8dp</dimen>
+    <dimen name="card_view_elevation">2dp</dimen>
+    <dimen name="logo_standard_size">50dp</dimen>
+    <dimen name="rounded_image_cr">10dp</dimen>
+    <dimen name="large_intend">18dp</dimen>
+    <dimen name="small_intend">12dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="x_large_intend">20dp</dimen>
+    <dimen name="fab_size">38dp</dimen>
+</resources>

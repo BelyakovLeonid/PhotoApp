@@ -1,5 +1,6 @@
 package com.example.photoapp.data.network
 
+import com.example.photoapp.BuildConfig
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
 import com.example.photoapp.data.network.response.PhotoDetailResponse
@@ -14,8 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-
-const val API_KEY = "cd1180255d7afef679adfe772daaa04b449166b9c5150b40f266e9967891393a"
 
 //https://api.unsplash.com/
 //https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
@@ -67,6 +66,9 @@ interface UnsplashApiService {
     ): Response<List<PhotoResponse>>
 
     companion object {
+        private const val API_KEY = BuildConfig.API_KEY
+        private const val BASE_URL = "https://api.unsplash.com/"
+
         operator fun invoke(): UnsplashApiService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
@@ -98,7 +100,7 @@ interface UnsplashApiService {
 
             return Retrofit.Builder()
                 .client(httpClient)
-                .baseUrl("https://api.unsplash.com/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()

@@ -3,67 +3,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="@dimen/small_intend">
 
     <TextView
         android:id="@+id/info_dimensions_text"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/small_intend"
         android:drawableStart="@drawable/ic_size_black"
-        android:drawablePadding="18dp"
-        android:text="Dimensions:" />
+        android:drawablePadding="@dimen/large_intend" />
 
     <TextView
         android:id="@+id/info_make_text"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/small_intend"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_make_black"
-        android:drawablePadding="18dp"
-        android:text="Dimensions:" />
+        android:drawablePadding="@dimen/large_intend" />
 
     <TextView
         android:id="@+id/info_camera_text"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/small_intend"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_camera_black"
-        android:drawablePadding="18dp"
-        android:text="Dimensions:" />
+        android:drawablePadding="@dimen/large_intend" />
 
     <TextView
         android:id="@+id/info_exposure_text"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/small_intend"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_exposure_black"
-        android:drawablePadding="18dp"
-        android:text="Dimensions:" />
+        android:drawablePadding="@dimen/large_intend" />
 
     <TextView
         android:id="@+id/info_aperture_text"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/small_intend"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_aperture_black"
-        android:drawablePadding="18dp"
-        android:text="Dimensions:" />
+        android:drawablePadding="@dimen/large_intend" />
 
     <TextView
         android:id="@+id/info_iso_text"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/small_intend"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_iso_black"
-        android:drawablePadding="18dp"
-        android:text="Dimensions:" />
+        android:drawablePadding="@dimen/large_intend" />
 
     <TextView
         android:id="@+id/info_focal_text"
@@ -71,7 +65,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_focal_length_black"
-        android:drawablePadding="18dp"
-        android:text="Dimensions:" />
+        android:drawablePadding="@dimen/large_intend" />
 
 </LinearLayout>

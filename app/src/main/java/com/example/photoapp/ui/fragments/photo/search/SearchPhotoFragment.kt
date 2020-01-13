@@ -1,6 +1,7 @@
 package com.example.photoapp.ui.fragments.photo.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,23 +47,35 @@ class SearchPhotoFragment : BaseSearchFragment() {
         super.onActivityCreated(savedInstanceState)
         photoListViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(PhotoListViewModel::class.java)
+
         photoListViewModel.photos.observe(this, Observer {
+            Log.d("MyTag", "photos")
             adapter.submitList(it)
-            showEmptyList(it.isEmpty())
+
+            if (it.isNotEmpty())
+                showList()
         })
 
         photoListViewModel.networkErrors.observe(this, Observer {
+            Log.d("MyTag", "error")
             showNetworkError(it.isNotEmpty())
         })
 
+        photoListViewModel.emptySorce.observe(this, Observer {
+            Log.d("MyTag", "empty")
+            showEmptyList()
+        })
+
         swipe_refresh_layout.setOnRefreshListener {
+            Log.d("MyTag", "refresh")
             updateData()
             swipe_refresh_layout.isRefreshing = false
         }
 
         commonSearchViewModel.queryLiveData.observe(this, Observer {
+            Log.d("MyTag", "query")
             lastQuery = it
-            photoListViewModel.fetchPhotos(it)
+            updateData()
         })
 
         placeholder_button.setOnClickListener {
@@ -70,33 +83,30 @@ class SearchPhotoFragment : BaseSearchFragment() {
         }
     }
 
-    private fun showProgress(inProgress: Boolean) {
-        if (inProgress) {
-            progress_group.visibility = View.VISIBLE
-            placeholder_group.visibility = View.GONE
-            placeholder_empty_group.visibility = View.GONE
-            swipe_refresh_layout.visibility = View.GONE
-        } else {
-            progress_group.visibility = View.GONE
-        }
-    }
-
-    private fun showEmptyList(isEmpty: Boolean) { //проблема в том, что data source при инициализации всегда отправляет пустой лист
-        if (isEmpty) {
-            placeholder_empty_group.visibility = View.VISIBLE
-            swipe_refresh_layout.visibility = View.GONE
-            placeholder_group.visibility = View.GONE
-            progress_group.visibility = View.GONE
-        } else {
-            swipe_refresh_layout.visibility = View.VISIBLE
-            placeholder_empty_group.visibility = View.GONE
-            placeholder_group.visibility = View.GONE
-            progress_group.visibility = View.GONE
-        }
-    }
-
     private fun updateData() {
+        showProgress()
         photoListViewModel.fetchPhotos(lastQuery)
+    }
+
+    private fun showProgress() {
+        progress_group.visibility = View.VISIBLE
+        placeholder_group.visibility = View.GONE
+        placeholder_empty_group.visibility = View.GONE
+        swipe_refresh_layout.visibility = View.GONE
+    }
+
+    private fun showList() {
+        swipe_refresh_layout.visibility = View.VISIBLE
+        placeholder_empty_group.visibility = View.GONE
+        placeholder_group.visibility = View.GONE
+        progress_group.visibility = View.GONE
+    }
+
+    private fun showEmptyList() {
+        placeholder_empty_group.visibility = View.VISIBLE
+        swipe_refresh_layout.visibility = View.GONE
+        placeholder_group.visibility = View.GONE
+        progress_group.visibility = View.GONE
     }
 
     private fun showNetworkError(isError: Boolean?) {

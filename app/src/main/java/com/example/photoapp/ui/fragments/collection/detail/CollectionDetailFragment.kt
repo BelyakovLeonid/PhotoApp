@@ -45,45 +45,48 @@ class CollectionDetailFragment : BaseDetailedFragment() {
         currentCollectionResponse = commonViewModel.collectionSelected!!
         bindToolbar()
 
+        specialViewModel.photos.observe(this, Observer {
+            adapter.submitList(it)
+            if (it.isNotEmpty())
+                showList()
+        })
+
         specialViewModel.networkErrors.observe(this, Observer {
             showNetworkError(it.isNotEmpty())
         })
 
-        specialViewModel.photos.observe(this, Observer {
-            adapter.submitList(it)
-
-//            progress_group.visibility = View.GONE
-//            placeholder_group.visibility = View.GONE
-//            swipe_refresh_layout.visibility = View.VISIBLE
+        specialViewModel.emptySorce.observe(this, Observer {
+            showEmptyList()
         })
-//
-//        swipe_refresh_layout.setOnRefreshListener {
-//            updateData()
-//            swipe_refresh_layout.isRefreshing = false
-//        }
-//
-//        placeholder_button.setOnClickListener {
-//            updateData()
-//        }
 
         updateData()
     }
-
     private fun updateData() {
-        specialViewModel.fetchPhotos(commonViewModel.collectionSelectedId.toString())
+//        showProgress()
+        specialViewModel.fetchPhotos(currentCollectionResponse.id.toString())
+    }
+
+//    private fun showProgress() {
+//        progress_group.visibility = View.VISIBLE
+//        placeholder_group.visibility = View.GONE
+//        placeholder_empty_group.visibility = View.GONE
+//        swipe_refresh_layout.visibility = View.GONE
+//    }
+
+    private fun showList() {
+        recycler_collection_details.visibility = View.VISIBLE
+    }
+
+    private fun showEmptyList() {
+        recycler_collection_details.visibility = View.GONE
     }
 
     private fun showNetworkError(isError: Boolean?) {
         if (isError == null) return
-//
-//        if (isError) {
-//            progress_group.visibility = View.GONE
-//            placeholder_group.visibility = View.VISIBLE
-//            swipe_refresh_layout.visibility = View.GONE
-//        } else {
-//            placeholder_group.visibility = View.GONE
-//            Toast.makeText(context, "Photos updated", Toast.LENGTH_SHORT).show()
-//        }
+
+        if (isError) {
+            recycler_collection_details.visibility = View.GONE
+        }
     }
 
     private fun goToDetails(sharedElement: View, photoSelected: PhotoResponse) {
@@ -106,12 +109,12 @@ class CollectionDetailFragment : BaseDetailedFragment() {
 
     override fun bindToolbar() {
         super.bindToolbar()
-        Glide.with(view!!).load(currentCollectionResponse.user.profileImage.medium)
+        Glide.with(view!!).load(currentCollectionResponse.user?.profileImage?.medium)
             .into(collection_icon)
         collection_description.text = currentCollectionResponse.description
-        collection_name.text = "By ${currentCollectionResponse.user.name}"
+        collection_name.text = "By ${currentCollectionResponse.user?.name}"
     }
 
     override fun getFragmentTitle() = currentCollectionResponse.title
-    override fun getUrlString() = currentCollectionResponse.links.html
+    override fun getUrlString() = currentCollectionResponse.links?.html
 }

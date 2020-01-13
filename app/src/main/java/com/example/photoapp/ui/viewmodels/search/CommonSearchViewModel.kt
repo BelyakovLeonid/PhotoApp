@@ -9,4 +9,6 @@ class CommonSearchViewModel : ScopedViewModel() {
     fun executeQuery(query: String? = queryLiveData.value) {
         queryLiveData.postValue(query ?: "")
     }
+
+    fun getQueryNonLive() = queryLiveData.value
 }

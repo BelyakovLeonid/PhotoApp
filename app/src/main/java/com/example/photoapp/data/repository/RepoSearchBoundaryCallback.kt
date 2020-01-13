@@ -23,9 +23,13 @@ class RepoSearchBoundaryCallback<T>(
     val networkErrors: LiveData<String>
         get() = _networkErrors
 
+    private val _emptySource = MutableLiveData<Boolean>()
+    val emptySource: LiveData<Boolean>
+        get() = _emptySource
+
     override fun onZeroItemsLoaded() {
         scope.launch(Dispatchers.IO) {
-            requestAndSaveData()
+            requestAndSaveData(true)
         }
     }
 
@@ -35,7 +39,7 @@ class RepoSearchBoundaryCallback<T>(
         }
     }
 
-    private suspend fun requestAndSaveData() {
+    private suspend fun requestAndSaveData(isInitial: Boolean = false) {
         if (isRequestInProgress) return
         isRequestInProgress = true
         try {
@@ -45,9 +49,14 @@ class RepoSearchBoundaryCallback<T>(
             )
 
             if (response.isSuccessful) {
-                cacheCall(response.body()!!.results) {
-                    lastRequestedPage++
+                if (isInitial && response.body()!!.results.isNullOrEmpty()) {
+                    _emptySource.postValue(true)
                     isRequestInProgress = false
+                } else {
+                    cacheCall(response.body()!!.results) {
+                        lastRequestedPage++
+                        isRequestInProgress = false
+                    }
                 }
             } else {
                 Log.d("MyTag", "unsuccess - ${response.message()}")

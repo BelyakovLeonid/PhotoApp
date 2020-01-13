@@ -57,7 +57,7 @@ class CollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         countText.text = "${collectionItem.totalPhotos} Photos"
 
         GlideApp.with(itemView)
-            .load(collectionItem.coverPhoto.urls.regular)
+            .load(collectionItem.coverPhoto?.urls?.regular)
             .placeholder(R.color.colorLight)
             .transition(DrawableTransitionOptions.withCrossFade(500))
             .into(photoView)

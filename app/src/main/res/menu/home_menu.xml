@@ -5,12 +5,12 @@
     <item
         android:id="@+id/toolbar_search"
         android:icon="@drawable/ic_search_black"
-        android:title="Search"
+        android:title="@string/menu_search"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/toolbar_sort"
         android:icon="@drawable/ic_sort_black"
-        android:title="SortBy"
+        android:title="@string/menu_sortby"
         app:showAsAction="ifRoom" />
 </menu>

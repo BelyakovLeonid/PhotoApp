@@ -14,7 +14,7 @@ class PhotosCache(
     private val collectionDao: CollectionDao
 ) {
     fun clearPhotos(scope: CoroutineScope) = scope.launch {
-        photoDao.clearPhotos()
+        photoDao.clearPhotos(DEFAULT_TAG)
     }
 
     suspend fun insertCollections(

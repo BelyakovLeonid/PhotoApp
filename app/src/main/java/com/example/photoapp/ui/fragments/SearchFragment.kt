@@ -12,7 +12,6 @@ import com.example.photoapp.ui.fragments.base.BaseSearchFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_pager_search.*
 
-
 class SearchFragment : BaseSearchFragment() {
 
     override fun onCreateView(
@@ -59,17 +58,21 @@ class SearchFragment : BaseSearchFragment() {
         toolbar.menu.findItem(R.id.menu_search)?.actionView?.apply {
             requestFocus()
 
-            (this as SearchView).setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    commonSearchViewModel.executeQuery(query)
-                    hideKeyBoard()
-                    return true
-                }
+            (this as SearchView).apply {
+                setQuery(commonSearchViewModel.getQueryNonLive(), false)
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return true
-                }
-            })
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        commonSearchViewModel.executeQuery(query)
+                        hideKeyBoard()
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        return true
+                    }
+                })
+            }
         }
     }
 

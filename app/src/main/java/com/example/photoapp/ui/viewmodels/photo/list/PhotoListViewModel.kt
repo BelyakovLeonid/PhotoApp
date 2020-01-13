@@ -24,10 +24,17 @@ class PhotoListViewModel(
             it.data
         }
     val networkErrors: LiveData<String> =
-        Transformations.switchMap(photoListResult) { it.networkErrors }
+        Transformations.switchMap(photoListResult) {
+            it.networkErrors
+        }
+
+    val emptySorce: LiveData<Boolean> =
+        Transformations.switchMap(photoListResult) {
+            it.emptySource
+        }
 
 
-    fun fetchPhotos(param: String = "latest") {
+    fun fetchPhotos(param: String = "") {
         parameterLiveData.postValue(param)
     }
 }

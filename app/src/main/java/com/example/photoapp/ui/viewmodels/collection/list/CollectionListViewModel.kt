@@ -26,6 +26,9 @@ class CollectionListViewModel(
     val networkErrors: LiveData<String> =
         Transformations.switchMap(collectionListResult) { it.networkErrors }
 
+    val emptySource: LiveData<Boolean> =
+        Transformations.switchMap(collectionListResult) { it.emptySource }
+
     fun fetchCollections(sortBy: String = "latest") {
         sortByLiveData.postValue(sortBy)
     }

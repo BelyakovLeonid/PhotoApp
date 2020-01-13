@@ -23,13 +23,13 @@ class UnsplashRepository(
                 { photos, callback -> cache.insertPhotos(photos, callback) }
             )
         val networkErrors = boundaryCallback.networkErrors
-
+        val emptySource = boundaryCallback.emptySource
         val dataSourceFactory = cache.getPhotos()
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()
 
-        return RepositoryListResult(data, networkErrors)
+        return RepositoryListResult(data, networkErrors, emptySource)
     }
 
     fun getCollectionsList(
@@ -92,13 +92,14 @@ class UnsplashRepository(
                 { photos, callback -> cache.insertPhotos(photos, callback, query) }
             )
         val networkErrors = boundaryCallback.networkErrors
+        val emptySource = boundaryCallback.emptySource
 
         val dataSourceFactory = cache.getPhotos(query)
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()
 
-        return RepositoryListResult(data, networkErrors)
+        return RepositoryListResult(data, networkErrors, emptySource)
     }
 
     fun searchCollections(

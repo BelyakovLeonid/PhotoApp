@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.transition.Fade
@@ -48,16 +49,16 @@ class PhotoListFragment : BaseFragment() {
 
         specialViewModel.photos.observe(this, Observer {
             adapter.submitList(it)
-
-            if (it.isEmpty()) {
-                showEmptyList()
-            } else {
+            if (it.isNotEmpty())
                 showList()
-            }
         })
 
         specialViewModel.networkErrors.observe(this, Observer {
-            error(it.isNotEmpty())
+            showNetworkError(it.isNotEmpty())
+        })
+
+        specialViewModel.emptySorce.observe(this, Observer {
+            showEmptyList()
         })
 
         swipe_refresh_layout.setOnRefreshListener {
@@ -73,7 +74,15 @@ class PhotoListFragment : BaseFragment() {
     }
 
     private fun updateData() {
+        showProgress()
         specialViewModel.fetchPhotos()
+    }
+
+    private fun showProgress() {
+        progress_group.visibility = View.VISIBLE
+        placeholder_group.visibility = View.GONE
+        placeholder_empty_group.visibility = View.GONE
+        swipe_refresh_layout.visibility = View.GONE
     }
 
     private fun showList() {
@@ -83,22 +92,25 @@ class PhotoListFragment : BaseFragment() {
         progress_group.visibility = View.GONE
     }
 
-    private fun showProgress(inProgress: Boolean) {
-        if (inProgress) {
-            progress_group.visibility = View.VISIBLE
-            placeholder_group.visibility = View.GONE
-            placeholder_empty_group.visibility = View.GONE
-            swipe_refresh_layout.visibility = View.GONE
-        } else {
-            progress_group.visibility = View.GONE
-        }
-    }
-
-    private fun showEmptyList() { //проблема в том, что data source при инициализации всегда отправляет пустой лист
+    private fun showEmptyList() {
         placeholder_empty_group.visibility = View.VISIBLE
         swipe_refresh_layout.visibility = View.GONE
         placeholder_group.visibility = View.GONE
         progress_group.visibility = View.GONE
+    }
+
+    private fun showNetworkError(isError: Boolean?) {
+        if (isError == null) return
+
+        if (isError) {
+            placeholder_group.visibility = View.VISIBLE
+            placeholder_empty_group.visibility = View.GONE
+            progress_group.visibility = View.GONE
+            swipe_refresh_layout.visibility = View.GONE
+        } else {
+            placeholder_group.visibility = View.GONE
+            Toast.makeText(context, "Photos updated", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun goToDetails(sharedElement: View, photoSelected: PhotoResponse) {

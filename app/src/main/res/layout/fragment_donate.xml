@@ -22,17 +22,17 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/small_intend"
         android:layout_marginBottom="20dp"
         android:src="@mipmap/launcher_icon"
-        app:riv_corner_radius="10dp" />
+        app:riv_corner_radius="@dimen/rounded_image_cr" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="2dp">
+        android:layout_margin="@dimen/card_view_margin"
+        app:cardCornerRadius="@dimen/card_view_cr"
+        app:cardElevation="@dimen/card_view_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,22 +43,22 @@
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Support developer"
+                android:layout_marginStart="@dimen/standard_indent"
+                android:layout_marginTop="@dimen/standard_indent"
+                android:text="@string/about_support_developer"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:padding="@dimen/standard_indent">
 
                 <TextView
                     android:id="@+id/coffee_title"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Cup of coffee"
+                    android:text="@string/donate_coffe_title"
                     app:layout_constraintBottom_toTopOf="@id/coffee_subtitle"
                     app:layout_constraintEnd_toStartOf="@id/coffee_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -70,7 +70,7 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="The easiest way to support your favourite developer!"
+                    android:text="@string/donate_coffe_subtitle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/coffee_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -82,8 +82,8 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="10,00$"
+                    android:layout_marginStart="@dimen/standard_indent"
+                    android:text="@string/donate_coffe_price"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/coffee_title"
@@ -99,14 +99,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:padding="@dimen/standard_indent">
 
                 <TextView
                     android:id="@+id/sandwich_title"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Tasty sandwich"
+                    android:text="@string/donate_sandwich_title"
                     app:layout_constraintBottom_toTopOf="@id/sandwich_subtitle"
                     app:layout_constraintEnd_toStartOf="@id/sandwich_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -118,7 +118,7 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Every one likes sandwiches!"
+                    android:text="@string/donate_sandwich_subtitle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/sandwich_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -130,8 +130,8 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="25$"
+                    android:layout_marginStart="@dimen/standard_indent"
+                    android:text="@string/donate_sandwich_price"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/sandwich_title"
@@ -147,14 +147,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:padding="@dimen/standard_indent">
 
                 <TextView
                     android:id="@+id/pizza_title"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Pizza"
+                    android:text="@string/donate_pizza_title"
                     app:layout_constraintBottom_toTopOf="@id/pizza_subtitle"
                     app:layout_constraintEnd_toStartOf="@id/pizza_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -166,7 +166,7 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="I'm not from Italy, but i am enjoying pizzas!"
+                    android:text="@string/donate_pizza_subtitle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/pizza_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -178,8 +178,8 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="40$"
+                    android:layout_marginStart="@dimen/standard_indent"
+                    android:text="@string/donate_pizza_price"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/pizza_title"
@@ -195,14 +195,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:padding="@dimen/standard_indent">
 
                 <TextView
                     android:id="@+id/restaurant_title"
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Dinner at the restaurant"
+                    android:text="@string/donate_restaurant_title"
                     app:layout_constraintBottom_toTopOf="@id/restaurant_subtitle"
                     app:layout_constraintEnd_toStartOf="@id/restaurant_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -214,7 +214,7 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Help the developer to invite his gf somewhere!"
+                    android:text="@string/donate_restaurant_subtitle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/restaurant_price"
                     app:layout_constraintHorizontal_weight="1"
@@ -226,8 +226,8 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="100$"
+                    android:layout_marginStart="@dimen/standard_indent"
+                    android:text="@string/donate_restaurant_price"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/restaurant_title"

@@ -49,20 +49,21 @@ class SearchCollectionFragment : BaseSearchFragment() {
         collectionListViewModel.collections.observe(this, Observer {
             adapter.submitList(it)
 
-            if (it.isEmpty()) {
-                showEmptyList()
-            } else {
+            if (it.isNotEmpty())
                 showList()
-            }
         })
 
         collectionListViewModel.networkErrors.observe(this, Observer {
             showNetworkError(it.isNotEmpty())
         })
 
+        collectionListViewModel.emptySource.observe(this, Observer {
+            showEmptyList()
+        })
+
         commonSearchViewModel.queryLiveData.observe(this, Observer {
             lastQuery = it
-            collectionListViewModel.fetchCollections(it)
+            updateData()
         })
 
         swipe_refresh_layout.setOnRefreshListener {
@@ -75,15 +76,16 @@ class SearchCollectionFragment : BaseSearchFragment() {
         }
     }
 
-    private fun showProgress(inProgress: Boolean) {
-        if (inProgress) {
-            progress_group.visibility = View.VISIBLE
-            placeholder_group.visibility = View.GONE
-            placeholder_empty_group.visibility = View.GONE
-            swipe_refresh_layout.visibility = View.GONE
-        } else {
-            progress_group.visibility = View.GONE
-        }
+    private fun updateData() {
+        showProgress()
+        collectionListViewModel.fetchCollections(lastQuery)
+    }
+
+    private fun showProgress() {
+        progress_group.visibility = View.VISIBLE
+        placeholder_group.visibility = View.GONE
+        placeholder_empty_group.visibility = View.GONE
+        swipe_refresh_layout.visibility = View.GONE
     }
 
     private fun showList() {
@@ -93,15 +95,11 @@ class SearchCollectionFragment : BaseSearchFragment() {
         progress_group.visibility = View.GONE
     }
 
-    private fun showEmptyList() { //проблема в том, что data source при инициализации всегда отправляет пустой лист
+    private fun showEmptyList() {
         placeholder_empty_group.visibility = View.VISIBLE
         swipe_refresh_layout.visibility = View.GONE
         placeholder_group.visibility = View.GONE
         progress_group.visibility = View.GONE
-    }
-
-    private fun updateData() {
-        collectionListViewModel.fetchCollections(lastQuery)
     }
 
     private fun showNetworkError(isError: Boolean?) {

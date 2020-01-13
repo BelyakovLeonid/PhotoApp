@@ -37,15 +37,19 @@ class CollectionListFragment : BaseFragment() {
         specialViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(CollectionListViewModel::class.java)
 
+        specialViewModel.collections.observe(this, Observer {
+            adapter.submitList(it)
+
+            if (it.isNotEmpty())
+                showList()
+        })
+
         specialViewModel.networkErrors.observe(this, Observer {
             showNetworkError(it.isNotEmpty())
         })
 
-        specialViewModel.collections.observe(this, Observer {
-            adapter.submitList(it)
-            progress_group.visibility = View.GONE
-            placeholder_group.visibility = View.GONE
-            swipe_refresh_layout.visibility = View.VISIBLE
+        specialViewModel.emptySource.observe(this, Observer {
+            showEmptyList()
         })
 
         swipe_refresh_layout.setOnRefreshListener {
@@ -60,20 +64,44 @@ class CollectionListFragment : BaseFragment() {
         updateData()
     }
 
+
     private fun updateData() {
+        showProgress()
         specialViewModel.fetchCollections()
+    }
+
+    private fun showProgress() {
+        progress_group.visibility = View.VISIBLE
+        placeholder_group.visibility = View.GONE
+        placeholder_empty_group.visibility = View.GONE
+        swipe_refresh_layout.visibility = View.GONE
+    }
+
+    private fun showList() {
+        swipe_refresh_layout.visibility = View.VISIBLE
+        placeholder_empty_group.visibility = View.GONE
+        placeholder_group.visibility = View.GONE
+        progress_group.visibility = View.GONE
+    }
+
+    private fun showEmptyList() {
+        placeholder_empty_group.visibility = View.VISIBLE
+        swipe_refresh_layout.visibility = View.GONE
+        placeholder_group.visibility = View.GONE
+        progress_group.visibility = View.GONE
     }
 
     private fun showNetworkError(isError: Boolean?) {
         if (isError == null) return
 
         if (isError) {
-            progress_group.visibility = View.GONE
             placeholder_group.visibility = View.VISIBLE
+            placeholder_empty_group.visibility = View.GONE
+            progress_group.visibility = View.GONE
             swipe_refresh_layout.visibility = View.GONE
         } else {
             placeholder_group.visibility = View.GONE
-            Toast.makeText(context, "Collections updated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Photos updated", Toast.LENGTH_SHORT).show()
         }
     }
 

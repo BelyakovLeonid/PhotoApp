@@ -5,13 +5,13 @@
     <item
         android:id="@+id/toolbar_browser"
         android:icon="@drawable/ic_earth_black"
-        android:title="Open in browser"
+        android:title="@string/menu_open_in_browser"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/toolbar_share"
         android:icon="@drawable/ic_share_black"
-        android:title="Share"
+        android:title="@string/menu_share"
         app:showAsAction="ifRoom" />
 
 </menu>

@@ -89,7 +89,7 @@ class RandomPhotoFragment : BaseDetailedFragment() {
     }
 
     private fun setWallpapers() { //todo make progress bar
-
+        //todo make separate helper class
         val myWallpaperManager = WallpaperManager.getInstance(activity)
 
         GlideApp.with(activity!!)

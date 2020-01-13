@@ -37,7 +37,7 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
-                android:elevation="4dp"
+                android:elevation="@dimen/toolbar_elevation"
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

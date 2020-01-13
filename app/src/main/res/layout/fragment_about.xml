@@ -30,11 +30,11 @@
                 android:id="@+id/about_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
+                android:layout_marginStart="@dimen/card_view_margin"
+                android:layout_marginTop="@dimen/card_view_margin"
+                android:layout_marginEnd="@dimen/card_view_margin"
+                app:cardCornerRadius="@dimen/card_view_cr"
+                app:cardElevation="@dimen/card_view_elevation">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,24 +45,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/main_image"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="@dimen/logo_standard_size"
+                            android:layout_height="@dimen/logo_standard_size"
                             android:src="@mipmap/launcher_icon"
-                            app:riv_corner_radius="10dp" />
+                            app:riv_corner_radius="@dimen/rounded_image_cr" />
 
                         <TextView
                             android:id="@+id/main_text"
                             style="@style/TextAppearance.MaterialComponents.Headline5"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="@dimen/standard_indent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|start"
-                            android:text="Photo App" />
+                            android:text="@string/app_name_with_space" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -70,21 +70,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             android:id="@+id/main_image_site"
                             style="@style/TextAppearance.MaterialComponents.Headline5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_photo_black" />
+                            android:src="@drawable/ic_photo_black"
+                            android:contentDescription="@string/description_unsplash_website" />
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Unspalsh.com" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_unspalsh_com" />
 
                     </LinearLayout>
 
@@ -93,19 +94,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_intro_black" />
+                            android:src="@drawable/ic_intro_black"
+                            android:contentDescription="@string/description_intro" />
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Intro" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_intro" />
 
                     </LinearLayout>
 
@@ -114,19 +116,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_github_logo" />
+                            android:src="@drawable/ic_github_logo"
+                            android:contentDescription="@string/description_github_repository" />
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="GitHub" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_github" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -137,10 +140,11 @@
                 android:id="@+id/about_support"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                app:cardCornerRadius="8dp">
+                android:layout_marginStart="@dimen/card_view_margin"
+                android:layout_marginTop="@dimen/card_view_margin"
+                android:layout_marginEnd="@dimen/card_view_margin"
+                app:cardCornerRadius="@dimen/card_view_cr"
+                app:cardElevation="@dimen/card_view_elevation">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -151,8 +155,8 @@
                         style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:text="Support developer"
+                        android:layout_margin="@dimen/standard_indent"
+                        android:text="@string/about_support_developer"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -160,14 +164,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             style="@style/TextAppearance.MaterialComponents.Headline5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_star_black" />
+                            android:src="@drawable/ic_star_black"
+                            android:contentDescription="@string/description_rate_the_app" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -179,15 +184,15 @@
                                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="Rate" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_rate_title" />
 
                             <TextView
                                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="Maybe one day i will publish this app" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_rate_subtitle" />
 
                         </LinearLayout>
 
@@ -198,7 +203,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             style="@style/TextAppearance.MaterialComponents.Headline5"
@@ -217,15 +222,15 @@
                                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="Donate" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_donate_title" />
 
                             <TextView
                                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="I will be very happy" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_donate_subtitle" />
 
                         </LinearLayout>
 
@@ -236,7 +241,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             style="@style/TextAppearance.MaterialComponents.Headline5"
@@ -255,15 +260,15 @@
                                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="Report bug" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_bug_title" />
 
                             <TextView
                                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="Let's fix all bugs together!" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_bug_subtitle" />
 
                         </LinearLayout>
 
@@ -277,10 +282,11 @@
                 android:id="@+id/about_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                app:cardCornerRadius="8dp">
+                android:layout_marginStart="@dimen/card_view_margin"
+                android:layout_marginTop="@dimen/card_view_margin"
+                android:layout_marginEnd="@dimen/card_view_margin"
+                app:cardCornerRadius="@dimen/card_view_cr"
+                app:cardElevation="@dimen/card_view_elevation">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -291,8 +297,8 @@
                         style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:text="Author"
+                        android:layout_margin="@dimen/standard_indent"
+                        android:text="@string/about_author"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -300,7 +306,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             style="@style/TextAppearance.MaterialComponents.Headline5"
@@ -319,15 +325,15 @@
                                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="Leonid Belyakov" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_author_title" />
 
                             <TextView
                                 style="@style/TextAppearance.MaterialComponents.Subtitle2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:text="Russia, Samara" />
+                                android:layout_marginStart="@dimen/standard_indent"
+                                android:text="@string/about_author_subtitle" />
 
                         </LinearLayout>
 
@@ -338,7 +344,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -349,8 +355,8 @@
                             style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Follow on vk.com" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_author_follow" />
 
                     </LinearLayout>
 
@@ -362,10 +368,12 @@
                 android:id="@+id/about_libraries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:cardCornerRadius="8dp">
+                android:layout_margin="@dimen/card_view_margin"
+                app:cardCornerRadius="@dimen/card_view_cr"
+                app:cardElevation="@dimen/card_view_elevation">
 
                 <LinearLayout
+                    android:layout_marginBottom="@dimen/standard_indent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -374,8 +382,8 @@
                         style="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:text="Libraries"
+                        android:layout_margin="@dimen/standard_indent"
+                        android:text="@string/about_libraries"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -383,79 +391,72 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Retrofit" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_libraries_retrofit_title" />
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="A type-safe HTTP client for Android and Java" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_libraries_retrofit_subtitle" />
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider"
-                        android:layout_marginTop="16dp" />
+                    <include layout="@layout/view_divider" />
 
                     <LinearLayout
                         android:id="@+id/libraries_two"
+                        android:layout_marginBottom="@dimen/standard_indent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Room" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_libraries_room_title" />
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="A persistence library, part of the Android Jetpack" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_libraries_room_subtitle" />
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider"
-                        android:layout_marginTop="16dp" />
+                    <include layout="@layout/view_divider" />
 
                     <LinearLayout
                         android:id="@+id/libraries_three"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/standard_indent">
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Glide" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_libraries_glide_title" />
 
                         <TextView
                             style="@style/TextAppearance.MaterialComponents.Subtitle2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:text="Fast and efficient image loading library" />
+                            android:layout_marginStart="@dimen/standard_indent"
+                            android:text="@string/about_libraries_glide_subtitle" />
 
                     </LinearLayout>
 

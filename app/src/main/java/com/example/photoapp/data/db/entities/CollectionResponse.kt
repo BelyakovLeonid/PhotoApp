@@ -26,9 +26,9 @@ data class CollectionResponse(
     val shareKey: String,
     @Embedded(prefix = "cover_photo_")
     @SerializedName("cover_photo")
-    val coverPhoto: CoverPhoto,
+    val coverPhoto: CoverPhoto?,
     @Embedded(prefix = "user_")
-    val user: User,
+    val user: User?,
     @Embedded(prefix = "links_")
-    override val links: Links
+    val links: Links
 ) : BaseResponse()

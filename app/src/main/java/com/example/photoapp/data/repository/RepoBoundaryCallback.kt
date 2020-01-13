@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -21,44 +22,51 @@ class RepoBoundaryCallback<T>(
     val networkErrors: LiveData<String>
         get() = _networkErrors
 
+    private val _emptySource = MutableLiveData<Boolean>()
+    val emptySource: LiveData<Boolean>
+        get() = _emptySource
+
     override fun onZeroItemsLoaded() {
-        // Fetch data synchronously (parameter is set to true)
-        // load an initial data set so the paged list is not empty.
-        // See https://issuetracker.google.com/u/2/issues/110843692?pli=1
-        requestAndSaveData(true)
+        scope.launch(Dispatchers.IO) {
+            requestAndSaveData(true)
+        }
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: T) {
-        requestAndSaveData()
+        scope.launch(Dispatchers.IO) {
+            requestAndSaveData()
+        }
     }
 
-    private fun requestAndSaveData(isSynchronously: Boolean = false) {
+    private suspend fun requestAndSaveData(isInitial: Boolean = false) {
         if (isRequestInProgress) return
         isRequestInProgress = true
+        try {
+            val response =
+                apiCall(
+                    lastRequestedPage,
+                    NETWORK_PAGE_SIZE
+                )
 
-        scope.launch {
-            try {
-                val response =
-                    apiCall(
-                        lastRequestedPage,
-                        NETWORK_PAGE_SIZE
-                    )
-
-                if (response.isSuccessful) {
+            if (response.isSuccessful) {
+                if (isInitial && response.body()!!.isNullOrEmpty()) {
+                    _emptySource.postValue(true)
+                    isRequestInProgress = false
+                } else {
                     cacheCall(response.body()!!) {
                         lastRequestedPage++
                         isRequestInProgress = false
                     }
-                } else {
-                    Log.d("MyTag", "unsuccess - ${response.message()}")
-                    _networkErrors.postValue("Error when fetching data")
-                    isRequestInProgress = false
                 }
-            } catch (e: Exception) {
-                Log.d("MyTag", "exception - ${e.message}")
+            } else {
+                Log.d("MyTag", "unsuccess - ${response.message()}")
                 _networkErrors.postValue("Error when fetching data")
                 isRequestInProgress = false
             }
+        } catch (e: Exception) {
+            Log.d("MyTag", "exception - ${e.message}")
+            _networkErrors.postValue("Error when fetching data")
+            isRequestInProgress = false
         }
     }
 

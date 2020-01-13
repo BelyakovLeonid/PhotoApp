@@ -22,5 +22,5 @@ data class PhotoResponse(
     @Embedded(prefix = "urls_")
     val urls: Urls,
     @Embedded(prefix = "links_")
-    override val links: Links
+    val links: Links
 ) : BaseResponse()

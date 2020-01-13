@@ -32,6 +32,7 @@
 
             <androidx.constraintlayout.motion.widget.MotionLayout
                 android:id="@+id/motion_layout"
+                android:paddingBottom="@dimen/x_large_intend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -47,10 +48,10 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/details_profile"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/logo_standard_size"
+                    android:layout_height="@dimen/logo_standard_size"
                     android:background="@color/colorPrimaryDark"
-                    android:padding="12dp"
+                    android:padding="@dimen/small_intend"
                     app:layout_constraintEnd_toStartOf="@+id/details_profile_title"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -76,8 +77,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_location_black"
-                    android:layout_margin="12dp"
-                    android:drawablePadding="12dp"
+                    android:layout_margin="@dimen/small_intend"
+                    android:drawablePadding="@dimen/small_intend"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_profile" />
 
@@ -86,8 +87,8 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:drawablePadding="12dp"
+                    android:layout_margin="@dimen/small_intend"
+                    android:drawablePadding="@dimen/small_intend"
                     android:drawableStart="@drawable/ic_date_black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_location" />
@@ -97,9 +98,9 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
+                    android:layout_margin="@dimen/small_intend"
                     android:drawableStart="@drawable/ic_favorite_black"
-                    android:drawablePadding="12dp"
+                    android:drawablePadding="@dimen/small_intend"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_date" />
 
@@ -108,9 +109,9 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
+                    android:layout_margin="@dimen/small_intend"
                     android:drawableStart="@drawable/ic_download_black"
-                    android:drawablePadding="12dp"
+                    android:drawablePadding="@dimen/small_intend"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_likes" />
 
@@ -119,9 +120,9 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
+                    android:layout_margin="@dimen/small_intend"
                     android:drawableStart="@drawable/ic_palette_black"
-                    android:drawablePadding="12dp"
+                    android:drawablePadding="@dimen/small_intend"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/details_downloads" />
 
@@ -148,41 +149,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_download_white"
-        app:fabCustomSize="38dp" />
+        app:fabCustomSize="@dimen/fab_size" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_menu_wallpapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_wallpaper_white"
-        app:fabCustomSize="38dp" />
+        app:fabCustomSize="@dimen/fab_size" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_menu_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_info_white"
-        app:fabCustomSize="38dp" />
+        app:fabCustomSize="@dimen/fab_size" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/menu_text1"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download" />
+        android:text="@string/fab_download" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/menu_text2"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set as wallpaper" />
+        android:text="@string/fab_wallpaper" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/menu_text3"
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Info" />
+        android:text="@string/fab_info" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
