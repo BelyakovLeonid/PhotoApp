@@ -1,5 +1,6 @@
 package com.example.photoapp.ui.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
@@ -12,4 +13,6 @@ class CommonViewModel : ViewModel() {
 
     var collectionSelectedId: Int? = null
     var collectionSelected: CollectionResponse? = null
+
+    val currentSortLiveData = MutableLiveData<String>("popular")
 }

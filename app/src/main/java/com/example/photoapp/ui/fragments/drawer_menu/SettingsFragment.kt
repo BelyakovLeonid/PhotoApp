@@ -59,6 +59,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             return@setOnPreferenceClickListener true
         }
+
+        Toast.makeText(activity, "Not implemented yet", Toast.LENGTH_SHORT).show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -146,7 +146,8 @@ class PhotoDetailFragment : BaseDetailedFragment() {
         GlideApp.with(view!!).load(photo.user.profileImage.small).into(details_profile)
         details_profile_title.text = photo.user.name
         details_likes.text = resources.getString(R.string.photos_detail_likes, photo.likes)
-        details_downloads.text = resources.getString(R.string.photos_detail_likes, photo.downloads)
+        details_downloads.text =
+            resources.getString(R.string.photos_detail_downloads, photo.downloads)
         details_color_title.text = photo.color
         bindLocation(photo.location)
         bindDate(photo.createdAt)

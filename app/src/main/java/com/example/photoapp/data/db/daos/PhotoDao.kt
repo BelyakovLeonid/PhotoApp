@@ -25,6 +25,6 @@ abstract class PhotoDao {
         })
     }
 
-    @Query("DELETE FROM photos WHERE tag != :defaultTag")
-    abstract suspend fun clearPhotos(defaultTag: String)
+    @Query("DELETE FROM photos")
+    abstract suspend fun clearPhotos()
 }

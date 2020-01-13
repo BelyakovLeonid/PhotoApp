@@ -24,6 +24,7 @@ class PhotoListFragment : BaseFragment() {
     private val viewModelFactory: PhotoListViewModelFactory by instance(tag = this.javaClass.name)
     private lateinit var specialViewModel: PhotoListViewModel
     private val adapter = PhotoListAdapter(this::goToDetails)
+    private lateinit var currentSort: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +35,10 @@ class PhotoListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progress_group.visibility = View.GONE
+        progress_group.visibility = View.VISIBLE
         placeholder_group.visibility = View.GONE
         swipe_refresh_layout.visibility = View.GONE
-        placeholder_empty_group.visibility = View.VISIBLE
+        placeholder_empty_group.visibility = View.GONE
 
         recycler_view.adapter = adapter
     }
@@ -62,7 +63,6 @@ class PhotoListFragment : BaseFragment() {
         })
 
         swipe_refresh_layout.setOnRefreshListener {
-            //            updateData()
             invalidateData()
             swipe_refresh_layout.isRefreshing = false
         }
@@ -71,12 +71,16 @@ class PhotoListFragment : BaseFragment() {
             updateData()
         }
 
-        updateData()
+        commonViewModel.currentSortLiveData.observe(this, Observer {
+            currentSort = it
+            updateData()
+        })
+
     }
 
     private fun updateData() {
         showProgress()
-        specialViewModel.fetchPhotos()
+        specialViewModel.fetchPhotos(currentSort)
     }
 
     private fun invalidateData() {

@@ -5,17 +5,17 @@
         android:id="@+id/action_latest"
         android:icon="@drawable/ic_latest"
         android:title="@string/menu_latest"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_oldest"
         android:icon="@drawable/ic_oldest"
         android:title="@string/menu_oldest"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_popular"
         android:icon="@drawable/ic_popular"
         android:title="@string/menu_popular"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

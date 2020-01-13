@@ -3,6 +3,7 @@ package com.example.photoapp.ui.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.GravityCompat
 import androidx.transition.Slide
@@ -35,8 +36,14 @@ class PagerFragment : BaseFragment(), KodeinAware {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     when (position) {
-                        0 -> drawer_navigation_view.setCheckedItem(R.id.drawer_home)
-                        else -> drawer_navigation_view.setCheckedItem(R.id.drawer_collections)
+                        0 -> {
+                            drawer_navigation_view.setCheckedItem(R.id.drawer_home)
+                            showSortMenu(true)
+                        }
+                        else -> {
+                            drawer_navigation_view.setCheckedItem(R.id.drawer_collections)
+                            showSortMenu(false)
+                        }
                     }
                 }
             })
@@ -53,6 +60,10 @@ class PagerFragment : BaseFragment(), KodeinAware {
                     1 -> tab.text = resources.getString(R.string.fragment_collections_title)
                 }
             }).attach()
+    }
+
+    private fun showSortMenu(show: Boolean) {
+        toolbar.menu?.findItem(R.id.toolbar_sort)?.isVisible = show
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -120,8 +131,18 @@ class PagerFragment : BaseFragment(), KodeinAware {
 
     private fun showSortSubMenu() {
         val popup = PopupMenu(this.context!!, view!!.findViewById(R.id.toolbar_sort))
+        (popup.menu as MenuBuilder).setOptionalIconsVisible(true)
         val inflater: MenuInflater = popup.menuInflater
         inflater.inflate(R.menu.actions_menu, popup.menu)
+
+        popup.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_latest -> commonViewModel.currentSortLiveData.postValue("latest")
+                R.id.action_oldest -> commonViewModel.currentSortLiveData.postValue("oldest")
+                R.id.action_popular -> commonViewModel.currentSortLiveData.postValue("popular")
+            }
+            return@setOnMenuItemClickListener true
+        }
         popup.show()
     }
 

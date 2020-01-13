@@ -4,6 +4,7 @@ import androidx.paging.LivePagedListBuilder
 import com.example.photoapp.data.db.PhotosCache
 import com.example.photoapp.data.db.entities.CollectionResponse
 import com.example.photoapp.data.db.entities.PhotoResponse
+import com.example.photoapp.data.db.entities.base.BaseResponse
 import com.example.photoapp.data.network.UnsplashApiService
 import com.example.photoapp.data.network.response.PhotoDetailResponse
 import com.example.photoapp.local.NetworkResult
@@ -16,15 +17,16 @@ class UnsplashRepository(
 ) : BaseRepository() {
 
     fun getPhotosList(sortBy: String, scope: CoroutineScope): RepositoryListResult<PhotoResponse> {
+        val dbTag = BaseResponse.DEFAULT_TAG + sortBy
         val boundaryCallback =
             RepoBoundaryCallback(
                 scope,
                 { page, perPage -> apiService.getListPhotos(page, perPage, sortBy) },
-                { photos, callback -> cache.insertPhotos(photos, callback) }
+                { photos, callback -> cache.insertPhotos(photos, callback, dbTag) }
             )
         val networkErrors = boundaryCallback.networkErrors
         val emptySource = boundaryCallback.emptySource
-        val dataSourceFactory = cache.getPhotos()
+        val dataSourceFactory = cache.getPhotos(dbTag)
         val data = LivePagedListBuilder(dataSourceFactory, DB_PAGE_SIZE)
             .setBoundaryCallback(boundaryCallback)
             .build()
