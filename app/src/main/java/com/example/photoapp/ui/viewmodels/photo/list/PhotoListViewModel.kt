@@ -28,13 +28,16 @@ class PhotoListViewModel(
             it.networkErrors
         }
 
-    val emptySorce: LiveData<Boolean> =
+    val emptySource: LiveData<Boolean> =
         Transformations.switchMap(photoListResult) {
             it.emptySource
         }
 
-
     fun fetchPhotos(param: String = "") {
         parameterLiveData.postValue(param)
+    }
+
+    fun invalidateData() {
+        photos.value?.dataSource?.invalidate()
     }
 }

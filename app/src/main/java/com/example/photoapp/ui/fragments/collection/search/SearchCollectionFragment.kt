@@ -67,7 +67,7 @@ class SearchCollectionFragment : BaseSearchFragment() {
         })
 
         swipe_refresh_layout.setOnRefreshListener {
-            updateData()
+            invalidateData()
             swipe_refresh_layout.isRefreshing = false
         }
 
@@ -79,6 +79,11 @@ class SearchCollectionFragment : BaseSearchFragment() {
     private fun updateData() {
         showProgress()
         collectionListViewModel.fetchCollections(lastQuery)
+    }
+
+    private fun invalidateData() {
+        showProgress()
+        collectionListViewModel.invalidateData()
     }
 
     private fun showProgress() {

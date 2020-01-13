@@ -58,12 +58,12 @@ class SearchPhotoFragment : BaseSearchFragment() {
             showNetworkError(it.isNotEmpty())
         })
 
-        photoListViewModel.emptySorce.observe(this, Observer {
+        photoListViewModel.emptySource.observe(this, Observer {
             showEmptyList()
         })
 
         swipe_refresh_layout.setOnRefreshListener {
-            updateData()
+            invalidateData()
             swipe_refresh_layout.isRefreshing = false
         }
 
@@ -80,6 +80,11 @@ class SearchPhotoFragment : BaseSearchFragment() {
     private fun updateData() {
         showProgress()
         photoListViewModel.fetchPhotos(lastQuery)
+    }
+
+    private fun invalidateData() {
+        showProgress()
+        photoListViewModel.invalidateData()
     }
 
     private fun showProgress() {

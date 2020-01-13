@@ -53,7 +53,7 @@ class CollectionListFragment : BaseFragment() {
         })
 
         swipe_refresh_layout.setOnRefreshListener {
-            updateData()
+            invalidateData()
             swipe_refresh_layout.isRefreshing = false
         }
 
@@ -68,6 +68,11 @@ class CollectionListFragment : BaseFragment() {
     private fun updateData() {
         showProgress()
         specialViewModel.fetchCollections()
+    }
+
+    private fun invalidateData() {
+        showProgress()
+        specialViewModel.invalidateData()
     }
 
     private fun showProgress() {

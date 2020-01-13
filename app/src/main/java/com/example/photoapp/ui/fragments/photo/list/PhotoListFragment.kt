@@ -57,12 +57,13 @@ class PhotoListFragment : BaseFragment() {
             showNetworkError(it.isNotEmpty())
         })
 
-        specialViewModel.emptySorce.observe(this, Observer {
+        specialViewModel.emptySource.observe(this, Observer {
             showEmptyList()
         })
 
         swipe_refresh_layout.setOnRefreshListener {
-            updateData()
+            //            updateData()
+            invalidateData()
             swipe_refresh_layout.isRefreshing = false
         }
 
@@ -76,6 +77,11 @@ class PhotoListFragment : BaseFragment() {
     private fun updateData() {
         showProgress()
         specialViewModel.fetchPhotos()
+    }
+
+    private fun invalidateData() {
+        showProgress()
+        specialViewModel.invalidateData()
     }
 
     private fun showProgress() {

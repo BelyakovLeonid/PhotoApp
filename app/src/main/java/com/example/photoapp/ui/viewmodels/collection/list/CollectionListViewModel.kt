@@ -32,4 +32,8 @@ class CollectionListViewModel(
     fun fetchCollections(sortBy: String = "latest") {
         sortByLiveData.postValue(sortBy)
     }
+
+    fun invalidateData() {
+        collections.value?.dataSource?.invalidate()
+    }
 }

@@ -55,7 +55,7 @@ class CollectionDetailFragment : BaseDetailedFragment() {
             showNetworkError(it.isNotEmpty())
         })
 
-        specialViewModel.emptySorce.observe(this, Observer {
+        specialViewModel.emptySource.observe(this, Observer {
             showEmptyList()
         })
 
