@@ -8,12 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.photoapp.R
 import com.example.photoapp.ui.fragments.PagerFragment
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
 
-class MainActivity : AppCompatActivity(), Router, KodeinAware {
-
-    override val kodein by closestKodein()
+class MainActivity : AppCompatActivity(), Router {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

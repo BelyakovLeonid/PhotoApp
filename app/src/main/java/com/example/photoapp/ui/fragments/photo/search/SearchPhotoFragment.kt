@@ -1,7 +1,6 @@
 package com.example.photoapp.ui.fragments.photo.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +48,6 @@ class SearchPhotoFragment : BaseSearchFragment() {
             ViewModelProviders.of(this, viewModelFactory).get(PhotoListViewModel::class.java)
 
         photoListViewModel.photos.observe(this, Observer {
-            Log.d("MyTag", "photos")
             adapter.submitList(it)
 
             if (it.isNotEmpty())
@@ -57,23 +55,19 @@ class SearchPhotoFragment : BaseSearchFragment() {
         })
 
         photoListViewModel.networkErrors.observe(this, Observer {
-            Log.d("MyTag", "error")
             showNetworkError(it.isNotEmpty())
         })
 
         photoListViewModel.emptySorce.observe(this, Observer {
-            Log.d("MyTag", "empty")
             showEmptyList()
         })
 
         swipe_refresh_layout.setOnRefreshListener {
-            Log.d("MyTag", "refresh")
             updateData()
             swipe_refresh_layout.isRefreshing = false
         }
 
         commonSearchViewModel.queryLiveData.observe(this, Observer {
-            Log.d("MyTag", "query")
             lastQuery = it
             updateData()
         })

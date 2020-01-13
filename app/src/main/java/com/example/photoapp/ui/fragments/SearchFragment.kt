@@ -30,8 +30,8 @@ class SearchFragment : BaseSearchFragment() {
             viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 when (position) {
-                    0 -> tab.text = "Photos"
-                    1 -> tab.text = "Collections"
+                    0 -> tab.text = resources.getString(R.string.fragment_photos_title)
+                    1 -> tab.text = resources.getString(R.string.fragment_collections_title)
                 }
             }).attach()
     }

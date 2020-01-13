@@ -74,19 +74,31 @@
     <string name="menu_search">Search</string>
 
     <!-- photo info dialog -->
-    <string name="info_make_empty">"Make: ---"</string>
-    <string name="info_model_empty">"Model: ---"</string>
-    <string name="info_exposure_empty">"Exposure: ---"</string>
-    <string name="info_aperture_empty">"Aperture: ---"</string>
-    <string name="info_iso_empty">"Iso: ---"</string>
-    <string name="info_focal_empty">"Focal length: ---"</string>
-    <string name="info_dimensions">"Dimensions: %1d x %2d"</string>
-    <string name="info_make">"Make: %s"</string>
-    <string name="info_model">"Model: %s"</string>
-    <string name="info_exposure">"Exposure: %s"</string>
-    <string name="info_aperture">"Aperture: %s"</string>
-    <string name="info_iso">"Iso: %d"</string>
-    <string name="info_focal">"Focal length: %s"</string>
+    <string name="info_make_empty">Make: ---</string>
+    <string name="info_model_empty">Model: ---</string>
+    <string name="info_exposure_empty">Exposure: ---</string>
+    <string name="info_aperture_empty">Aperture: ---</string>
+    <string name="info_iso_empty">Iso: ---</string>
+    <string name="info_focal_empty">Focal length: ---</string>
+    <string name="info_dimensions">Dimensions: %1d x %2d</string>
+    <string name="info_make">Make: %s</string>
+    <string name="info_model">Model: %s</string>
+    <string name="info_exposure">Exposure: %s</string>
+    <string name="info_aperture">Aperture: %s</string>
+    <string name="info_iso">Iso: %d</string>
+    <string name="info_focal">Focal length: %s</string>
 
+    <!-- fragments   -->
+    <string name="collection_detail_author">By %s</string>
+    <string name="photos_detail_likes">%d Likes</string>
+    <string name="photos_detail_downloads">%d Downloads</string>
+    <string name="fragment_home_title">Home</string>
+    <string name="fragment_collections_title">Collections</string>
+    <string name="fragment_photos_title">Photos</string>
+
+
+    <string name="toast_photos_updated">Photos updated</string>
+    <string name="toast_no_browser">Please, download browser app</string>
+    <string name="toast_failed">Failed</string>
 
 </resources>

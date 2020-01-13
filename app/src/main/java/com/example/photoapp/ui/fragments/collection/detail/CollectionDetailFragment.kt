@@ -112,9 +112,12 @@ class CollectionDetailFragment : BaseDetailedFragment() {
         Glide.with(view!!).load(currentCollectionResponse.user?.profileImage?.medium)
             .into(collection_icon)
         collection_description.text = currentCollectionResponse.description
-        collection_name.text = "By ${currentCollectionResponse.user?.name}"
+        collection_name.text = resources.getString(
+            R.string.collection_detail_author,
+            currentCollectionResponse.user?.name
+        )
     }
 
     override fun getFragmentTitle() = currentCollectionResponse.title
-    override fun getUrlString() = currentCollectionResponse.links?.html
+    override fun getUrlString() = currentCollectionResponse.links.html
 }

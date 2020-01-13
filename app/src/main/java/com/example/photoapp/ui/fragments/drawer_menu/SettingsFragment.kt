@@ -39,7 +39,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeAsUpIndicator(R.drawable.ic_back_black)
-                title = "Settings"
+                title = resources.getString(R.string.menu_settings)
             }
         }
         return view
@@ -51,7 +51,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (checkBrowser())
                 startActivity(browserIntent)
             else {
-                Toast.makeText(activity, "Please, download browser app", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    resources.getString(R.string.toast_no_browser),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             return@setOnPreferenceClickListener true
         }

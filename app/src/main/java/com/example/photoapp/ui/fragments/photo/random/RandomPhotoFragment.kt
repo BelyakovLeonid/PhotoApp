@@ -68,7 +68,7 @@ class RandomPhotoFragment : BaseDetailedFragment() {
         //OnClick listener not working good with motionLayout, so i use onTouchListener:
         floating_menu_download.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                Toast.makeText(this.context, "downloiad", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.context, "Not implemented Yet", Toast.LENGTH_SHORT).show()
             }
             false
         }

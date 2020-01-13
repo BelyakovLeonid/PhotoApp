@@ -69,7 +69,7 @@ class PhotoDetailFragment : BaseDetailedFragment() {
         //OnClick listener not working good with motionLayout, so i use onTouchListener:
         floating_menu_download.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                Toast.makeText(this.context, "downloiad", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.context, "Not implemented yet", Toast.LENGTH_SHORT).show()
             }
             false
         }
@@ -98,14 +98,22 @@ class PhotoDetailFragment : BaseDetailedFragment() {
             .load(currentPhotoDetailResponse.urls.full)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onLoadCleared(placeholder: Drawable?) {
-                    Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        activity,
+                        resources.getString(R.string.toast_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     try {
                         myWallpaperManager.setBitmap(resource)
                     } catch (e: Exception) {
-                        Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            activity,
+                            resources.getString(R.string.toast_failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             })
@@ -137,8 +145,8 @@ class PhotoDetailFragment : BaseDetailedFragment() {
     private fun bindUI(photo: PhotoDetailResponse) {
         GlideApp.with(view!!).load(photo.user.profileImage.small).into(details_profile)
         details_profile_title.text = photo.user.name
-        details_likes.text = "${photo.likes} Likes"
-        details_downloads.text = "${photo.downloads} Downloads"
+        details_likes.text = resources.getString(R.string.photos_detail_likes, photo.likes)
+        details_downloads.text = resources.getString(R.string.photos_detail_likes, photo.downloads)
         details_color_title.text = photo.color
         bindLocation(photo.location)
         bindDate(photo.createdAt)

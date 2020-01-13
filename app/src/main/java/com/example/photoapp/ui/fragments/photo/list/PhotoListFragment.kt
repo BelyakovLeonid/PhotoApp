@@ -109,7 +109,11 @@ class PhotoListFragment : BaseFragment() {
             swipe_refresh_layout.visibility = View.GONE
         } else {
             placeholder_group.visibility = View.GONE
-            Toast.makeText(context, "Photos updated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                resources.getString(R.string.toast_photos_updated),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

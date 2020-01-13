@@ -49,8 +49,8 @@ class PagerFragment : BaseFragment(), KodeinAware {
             viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 when (position) {
-                    0 -> tab.text = "Home"
-                    1 -> tab.text = "Collections"
+                    0 -> tab.text = resources.getString(R.string.fragment_home_title)
+                    1 -> tab.text = resources.getString(R.string.fragment_collections_title)
                 }
             }).attach()
     }
