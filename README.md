@@ -1,7 +1,5 @@
 # PhotoApp
-Ordinary app for fetching photos from unsplash.com 
-
-Приложение для просмотра фотографий с unsplash.com 
+Приложение для просмотра фотографий unsplash.com 
 
 Выполнено в качестве тестового задания. 
 
